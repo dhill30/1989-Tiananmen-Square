@@ -11,9 +11,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
+import insides.FileTree;
+import insides.Project;
 import insides.Tab;
 
 public class GUIProjectPane extends JPanel
@@ -23,12 +27,19 @@ public class GUIProjectPane extends JPanel
 	 */
 	private static final long serialVersionUID = 4753492397994159278L;
 
+	private FileTree theFileTree;
+	
 	private Tab theTab;
+	
+	private JList projectList;
+	
+	private JScrollPane scrollPane;
 	
 	private GridBagConstraints constraints;
 	
-	public GUIProjectPane(Tab currentTab)
+	public GUIProjectPane(FileTree fileTree, Tab currentTab)
 	{
+		theFileTree = fileTree;
 		theTab = currentTab;
 		setLayout(new GridBagLayout());
 		constraints = new GridBagConstraints();
@@ -38,30 +49,53 @@ public class GUIProjectPane extends JPanel
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 		
+		JButton removeProject = new JButton("Remove Project");
+		setConstraints(1,0,1,1,0.1,0.05);
+		add(removeProject, constraints);
+		
 		JButton addProject = new JButton("Add Project");
-		addProject.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				System.out.println("Project added...");
-			}
-		});
-		setConstraints(1,0,1,1,0.2,0.05);
+		setConstraints(2,0,1,1,0.1,0.05);
 		add(addProject, constraints);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane = new JScrollPane(panel);
 		
-		JList projectList = loadProjects();
+		projectList = loadProjects();
+		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(projectList);
-		setConstraints(0,1,2,1,1,0.95);
+		setConstraints(0,1,3,1,1,0.95);
 		add(scrollPane, constraints);
+		
+		addProject.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = JOptionPane.showInputDialog("Enter Project name:", null);
+				if (name != null) theFileTree.newProject(name, theTab);
+				refresh();
+				System.out.println("Project added...");
+			}
+		});
+		
+		removeProject.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Project selected = (Project) projectList.getSelectedValue();
+				int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
+				if (confirm == 0) theFileTree.delete(selected, theTab);
+				refresh();
+				System.out.println("Project removed...");
+			}
+		});
 	}
 	
 	public JList loadProjects()
 	{
-		return new JList(theTab.getContents().toArray());
+		JList list = new JList(theTab.getContents().toArray());
+		list.setFont(new Font("Tahoma", Font.BOLD, 20));
+		return list;
 	}
 	
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
@@ -74,5 +108,12 @@ public class GUIProjectPane extends JPanel
 		constraints.weighty = wy;
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.fill = GridBagConstraints.BOTH;
+	}
+	
+	private void refresh()
+	{
+		projectList = loadProjects();
+		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(projectList);
 	}
 }

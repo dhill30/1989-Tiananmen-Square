@@ -1,11 +1,13 @@
 package graphics;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -25,14 +27,17 @@ public class GUITabPane extends JPanel
 	
 	private FileTree theFileTree;
 	
+	private GUIProjectPaneManager projectManager;
+	
 	private JList tabList;
 	
 	private JScrollPane scrollPane;
 	
-	public GUITabPane(FileTree fileTree)
+	public GUITabPane(FileTree fileTree, GUIProjectPaneManager pm)
 	{
 		setLayout(new BorderLayout());
 		theFileTree = fileTree;
+		projectManager = pm;
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -52,8 +57,21 @@ public class GUITabPane extends JPanel
 	public JList loadTabs()
 	{
 		List<Tab> tabs = theFileTree.getTabs();
-		JList list = new JList(tabs.toArray());
+		final JList list = new JList(tabs.toArray());
 		list.setFont(new Font("Tahoma", Font.BOLD, 16));
+		list.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2 || e.getClickCount() == 3)
+				{
+					Tab t = (Tab) list.getSelectedValue();
+					CardLayout layout = (CardLayout) projectManager.getLayout();
+					layout.show(projectManager, t.toString());
+					projectManager.setPane(t);
+				}
+			}
+		});
 		return list;
 	}
 	

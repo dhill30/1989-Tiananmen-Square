@@ -1,9 +1,7 @@
 package graphics;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,7 +12,6 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -31,6 +28,8 @@ public class GUIMain
 	private static FileTree theFileTree;
 	
 	private GUITabPane tabs;
+	
+	private GUIProjectPaneManager projectManager;
 	
 	private GUIMain()
 	{
@@ -66,7 +65,8 @@ public class GUIMain
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
 		
-		tabs = new GUITabPane(theFileTree);
+		projectManager = new GUIProjectPaneManager(theFileTree);
+		tabs = new GUITabPane(theFileTree, projectManager);
 		
 		constraints = new GridBagConstraints();
 		createMenu();
@@ -111,16 +111,8 @@ public class GUIMain
 	
 	private void createHomePane()
 	{
-		JPanel home = new GUIProjectPane(theFileTree.getTabs().get(0));
-//		JPanel home = new JPanel();
-//		home.setLayout(new GridBagLayout());
-//		home.setBackground(Color.WHITE);
 		setConstraints(2, 0, 5, 1, 0.8, 0.95);
-		mainFrame.add(home, constraints);
-//		
-//		JLabel title = new JLabel("Jon's Gahraj");
-//		title.setFont(new Font("Tahoma", Font.BOLD, 48));
-//		home.add(title);
+		mainFrame.add(projectManager, constraints);
 	}
 	
 	private void createTabButtons()
@@ -132,7 +124,11 @@ public class GUIMain
 			public void actionPerformed(ActionEvent e)
 			{
 				String name = JOptionPane.showInputDialog(mainFrame, "Enter Tab name:", null);
-				if (name != null) theFileTree.newTab(name);
+				if (name != null)
+				{
+					Tab temp = theFileTree.newTab(name);
+					projectManager.addPane(temp);
+				}
 				tabs.refresh();
 				System.out.println("Tab added...");
 			}
@@ -147,7 +143,11 @@ public class GUIMain
 			{
 				Tab selected = tabs.getSelected();
 				int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0) theFileTree.delete(selected, theFileTree.getRoot());
+				if (confirm == 0)
+				{
+					theFileTree.delete(selected, theFileTree.getRoot());
+					projectManager.removePane(selected);
+				}
 				tabs.refresh();
 				System.out.println("Tab removed...");
 			}
