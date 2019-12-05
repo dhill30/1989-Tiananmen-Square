@@ -50,6 +50,7 @@ public class GUITabList extends JPanel {
 		listOfTabs.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(listOfTabs);
 
+		scrollPane.getViewport().
 	}
 	
 	
