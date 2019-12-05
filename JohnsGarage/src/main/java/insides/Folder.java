@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Folder<T extends GFile> extends GFile{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -183292124244169346L;
+	
 	private ArrayList<T> _contents;
 	
 	/**

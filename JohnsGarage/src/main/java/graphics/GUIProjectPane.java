@@ -82,13 +82,18 @@ public class GUIProjectPane extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Project selected = (Project) projectList.getSelectedValue();
+				Project selected = getSelected();
 				int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
 				if (confirm == 0) theFileTree.delete(selected, theTab);
 				refresh();
 				System.out.println("Project removed...");
 			}
 		});
+	}
+	
+	public Project getSelected()
+	{
+		return (Project) projectList.getSelectedValue();
 	}
 	
 	public JList loadProjects()

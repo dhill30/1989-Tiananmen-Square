@@ -9,29 +9,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import insides.FileTree;
+import insides.Project;
 import insides.Tab;
 
 public class GUIProjectPaneManager extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8240251102196104852L;
+
 	private FileTree theFileTree;
 	
 	private HashMap<Tab, GUIProjectPane> panes;
 	
-	private String activePane;
+	private Tab activePane;
 	
 	public GUIProjectPaneManager(FileTree fileTree)
 	{
 		setLayout(new CardLayout());
 		theFileTree = fileTree;
 		panes = new HashMap<Tab, GUIProjectPane>();
-		activePane = "_home";
+		activePane = new Tab(null, "_home");
 		
 		JPanel home = new JPanel();
 		home.setBackground(Color.WHITE);
 		JLabel title = new JLabel("Jon's Gahraj");
 		title.setFont(new Font("Tahoma", Font.BOLD, 48));
 		home.add(title);
-		add(home, "_home");
+		add(home, activePane.toString());
 		createPanes();
 	}
 	
@@ -55,7 +61,7 @@ public class GUIProjectPaneManager extends JPanel
 	public void removePane(Tab t)
 	{
 		GUIProjectPane temp = panes.get(t);
-		if (activePane.equals(t.toString()))
+		if (activePane == t)
 		{
 			CardLayout layout = (CardLayout) this.getLayout();
 			layout.show(this, "_home");
@@ -64,8 +70,13 @@ public class GUIProjectPaneManager extends JPanel
 		panes.remove(t);
 	}
 	
+	public Project getSelected()
+	{
+		return panes.get(activePane).getSelected();
+	}
+	
 	public void setPane(Tab t)
 	{
-		activePane = t.toString();
+		activePane = t;
 	}
 }

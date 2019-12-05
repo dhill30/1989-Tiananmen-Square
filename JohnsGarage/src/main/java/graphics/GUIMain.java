@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import insides.FileTree;
+import insides.Project;
 import insides.Tab;
 
 public class GUIMain
@@ -55,6 +57,14 @@ public class GUIMain
 				}
 			}
 		});
+		
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+			public void run()
+			{
+				theFileTree.close();
+			}
+		});
 	}
 	
 	private void initialize()
@@ -74,6 +84,7 @@ public class GUIMain
 		createHomePane();
 		createTabButtons();
 		createImportExport();
+		
 	}
 	
 	private void createMenu()
@@ -180,9 +191,21 @@ public class GUIMain
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.showSaveDialog(null);
-				System.out.println("Exported...");
+				Project toExport = projectManager.getSelected();
+				if (toExport != null)
+				{
+					JFileChooser fileChooser = new JFileChooser();
+					if (fileChooser.showSaveDialog(mainFrame) == JFileChooser.APPROVE_OPTION)
+					{
+						Path location = fileChooser.getSelectedFile().toPath();
+						theFileTree.export(toExport, location);
+					}
+					System.out.println("Exported...");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(mainFrame, "Please select a Project to export.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		mainFrame.add(exportBtn, constraints);
