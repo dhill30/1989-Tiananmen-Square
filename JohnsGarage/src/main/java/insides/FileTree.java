@@ -127,9 +127,10 @@ public class FileTree {
 			if(!file.getClass().getSimpleName().equals("Item"))
 			{
 				Folder fold = (Folder) file;
-				for(GFile f : (List<GFile>) fold.getContents())
+				List<Folder> contents = fold.getContents();
+				while(!contents.isEmpty())
 				{
-					delete(f, (Folder) file);
+					delete(contents.get(0), (Folder) file);
 				}
 			}
 			Files.delete(file.getPath());
@@ -399,6 +400,12 @@ public class FileTree {
 		}
 	}
 	
+	/**
+	 * Returns a reference to the root. Really should only be used when deleting tabs.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return the root
+	 */
 	public Folder<Tab> getRoot()
 	{
 		return _root;

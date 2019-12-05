@@ -49,8 +49,6 @@ public class GUITabList extends JPanel {
 		listOfTabs.setFont(new Font("Tahoma", Font.BOLD, 12));
 		listOfTabs.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(listOfTabs);
-
-		scrollPane.getViewport().
 	}
 	
 	

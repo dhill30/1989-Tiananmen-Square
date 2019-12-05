@@ -1,3 +1,8 @@
+/**
+ * The main GUI window for the project, and also the entry point.
+ * Last Edited: 12/4/2019
+ * @author Dylan
+ */
 package graphics;
 
 import java.awt.Color;
@@ -32,11 +37,22 @@ public class GUIMain
 	
 	private GUITabPane tabs;
 	
+	/**
+	 * Basic constructor.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private GUIMain()
 	{
 		initialize();
 	}
 	
+	/**
+	 * Starts the program and initializes the FileTree
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		theFileTree = new FileTree();
@@ -58,6 +74,11 @@ public class GUIMain
 		});
 	}
 	
+	/**
+	 * Creates the basic UI components for the main UI window.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void initialize()
 	{
 		mainFrame = new JFrame("Jon's Gahraj");
@@ -76,6 +97,11 @@ public class GUIMain
 		createImportExport();
 	}
 	
+	/**
+	 * Creates the MenuBar used to access the about screen
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createMenu()
 	{
 		JMenuBar menu = new JMenuBar();
@@ -101,6 +127,11 @@ public class GUIMain
 		menu.add(about);
 	}
 	
+	/**
+	 * Sets graphical settings for the GUITabPane
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createTabPane()
 	{
 		//GUITabPane tabs = new GUITabPane(theFileTree);
@@ -109,6 +140,11 @@ public class GUIMain
 		tabs.setVisible(true);
 	}
 	
+	/**
+	 * Creates the center window used to display projects once a tab is selected.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createHomePane()
 	{
 		JPanel home = new GUIProjectPane(theFileTree.getTabs().get(0));
@@ -123,6 +159,11 @@ public class GUIMain
 //		home.add(title);
 	}
 	
+	/**
+	 * Builds the add and remove tab buttons below the tab list, and the actions associated with them.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createTabButtons()
 	{
 		JButton addTab = new JButton("Add Tab");
@@ -155,6 +196,9 @@ public class GUIMain
 		mainFrame.add(removeTab, constraints);
 	}
 	
+	/**
+	 * 
+	 */
 	private void createImportExport()
 	{
 		JPanel emptyspace = new JPanel();
