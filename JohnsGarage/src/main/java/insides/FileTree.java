@@ -120,21 +120,21 @@ public class FileTree {
 	 * @param parent
 	 * @author Sam
 	 */
-	public void delete(GFile filetodelete, Folder parent)
+	public void delete(GFile file, Folder parent)
 	{
 		try
 		{
-			if(!filetodelete.getClass().getSimpleName().equals("Item"))
+			if(!file.getClass().getSimpleName().equals("Item"))
 			{
-				Folder fold = (Folder) filetodelete;
+				Folder fold = (Folder) file;
 				for(GFile f : (List<GFile>) fold.getContents())
 				{
-					delete(f, (Folder) filetodelete);
+					delete(f, (Folder) file);
 				}
 			}
-			Files.delete(filetodelete.getPath());
-			parent.getContents().remove(filetodelete);
-			filetodelete = null;
+			Files.delete(file.getPath());
+			parent.getContents().remove(file);
+			file = null;
 		}
 		catch (IOException e)
 		{
@@ -397,5 +397,10 @@ public class FileTree {
 				parent.add(temp);
 			}
 		}
+	}
+	
+	public Folder<Tab> getRoot()
+	{
+		return _root;
 	}
 }

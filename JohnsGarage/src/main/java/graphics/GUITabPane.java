@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import insides.FileTree;
@@ -17,7 +18,16 @@ import insides.Tab;
 
 public class GUITabPane extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6346402233257430593L;
+	
 	private FileTree theFileTree;
+	
+	private JList tabList;
+	
+	private JScrollPane scrollPane;
 	
 	public GUITabPane(FileTree fileTree)
 	{
@@ -26,14 +36,15 @@ public class GUITabPane extends JPanel
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane = new JScrollPane(panel);
 		
-		JList tabList = loadTabs();
+		tabList = loadTabs();
+		tabList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(tabList);
 		add(scrollPane);
 		
 		JLabel title = new JLabel("Tabs");
-		title.setFont(new Font("Tahoma", Font.BOLD, 12));
+		title.setFont(new Font("Tahoma", Font.BOLD, 20));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(title);
 	}
@@ -41,11 +52,20 @@ public class GUITabPane extends JPanel
 	public JList loadTabs()
 	{
 		List<Tab> tabs = theFileTree.getTabs();
-		return new JList(tabs.toArray());
+		JList list = new JList(tabs.toArray());
+		list.setFont(new Font("Tahoma", Font.BOLD, 16));
+		return list;
 	}
 	
-	private Action buildOpenTabAction(Tab t)
+	public Tab getSelected()
 	{
-		return null;
+		return (Tab) tabList.getSelectedValue();
+	}
+	
+	public void refresh()
+	{
+		tabList = loadTabs();
+		tabList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(tabList);
 	}
 }
