@@ -21,5 +21,4 @@ public class Item extends GFile
 	{
 		super(path, name);
 	}
-
 }

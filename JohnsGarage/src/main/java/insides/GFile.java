@@ -68,4 +68,10 @@ public class GFile implements Serializable{
 	{
 		_name = new String(newName);
 	}
+	
+	@Override 
+	public String toString()
+	{
+		return _name;
+	}
 }

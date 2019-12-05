@@ -114,25 +114,27 @@ public class FileTree {
 
 	/**
 	 * Takes a GFile and recursively deletes both its children and itself.
-	 * Calling this method will eliminate the reference passed to it.
+	 * Calling this method will eliminate the reference passed to it. It will not delete the parent, only remove the reference to the deleted file from the list of contents.
 	 * Last Edited: 12/4/2019
 	 * @param file
+	 * @param parent
 	 * @author Sam
 	 */
-	public void delete(GFile file)
+	public void delete(GFile filetodelete, Folder parent)
 	{
 		try
 		{
-			if(!file.getClass().getSimpleName().equals("Item"))
+			if(!filetodelete.getClass().getSimpleName().equals("Item"))
 			{
-				Folder fold = (Folder) file;
+				Folder fold = (Folder) filetodelete;
 				for(GFile f : (List<GFile>) fold.getContents())
 				{
-					delete(f);
+					delete(f, (Folder) filetodelete);
 				}
 			}
-			Files.delete(file.getPath());
-			file = null;
+			Files.delete(filetodelete.getPath());
+			parent.getContents().remove(filetodelete);
+			filetodelete = null;
 		}
 		catch (IOException e)
 		{
@@ -256,6 +258,7 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
+			_root.add(ret);
 			System.out.println("1");
 			return ret;
 			
@@ -324,7 +327,7 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
-	public Item newItem(String nameplusext, Path itempath, Category parent) //I'm unsure as to how this is going to be called, 
+	public Item newItem(String nameplusext, Path itempath, Category parent)
 	{
 		try
 		{
