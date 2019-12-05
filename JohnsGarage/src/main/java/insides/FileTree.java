@@ -119,7 +119,7 @@ public class FileTree {
 	 * @param file
 	 * @author Sam
 	 */
-	public void delete(GFile file)
+	public void delete(GFile file, Folder parent)
 	{
 		try
 		{
@@ -128,10 +128,11 @@ public class FileTree {
 				Folder fold = (Folder) file;
 				for(GFile f : (List<GFile>) fold.getContents())
 				{
-					delete(f);
+					delete(f, (Folder) file);
 				}
 			}
 			Files.delete(file.getPath());
+			parent.getContents().remove(file);
 			file = null;
 		}
 		catch (IOException e)
@@ -256,6 +257,7 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
+			_root.add(ret);
 			System.out.println("1");
 			return ret;
 			
@@ -394,5 +396,10 @@ public class FileTree {
 				parent.add(temp);
 			}
 		}
+	}
+	
+	public Folder<Tab> getRoot()
+	{
+		return _root;
 	}
 }
