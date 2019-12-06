@@ -61,13 +61,7 @@ public class GUIProjectView extends JFrame
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 		
-		JButton removeItem = new JButton("Remove Item");
-		setConstraints(1,0,1,1,0.1,0.05);
-		add(removeItem, constraints);
-		
-		JButton addItem = new JButton("Add Item");
-		setConstraints(2,0,1,1,0.1,0.05);
-		add(addItem, constraints);
+		createAddRemove();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -78,16 +72,12 @@ public class GUIProjectView extends JFrame
 		scrollPane.setViewportView(itemList);
 		setConstraints(0,1,3,1,1,0.95);
 		add(scrollPane, constraints);
-		
-		addItem.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				GUIAddItem temp = new GUIAddItem(theFileTree, theProject, GUIProjectView.this);
-				temp.setVisible(true);
-			}
-		});
-		
+	}
+	
+	private void createAddRemove()
+	{
+		JButton removeItem = new JButton("Remove Item");
+		setConstraints(1,0,1,1,0.1,0.05);
 		removeItem.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -99,6 +89,19 @@ public class GUIProjectView extends JFrame
 				System.out.println("Item removed...");
 			}
 		});
+		add(removeItem, constraints);
+		
+		JButton addItem = new JButton("Add Item");
+		setConstraints(2,0,1,1,0.1,0.05);
+		addItem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				GUIAddItem temp = new GUIAddItem(theFileTree, theProject, GUIProjectView.this);
+				temp.setVisible(true);
+			}
+		});
+		add(addItem, constraints);
 	}
 	
 	public JList loadItems()

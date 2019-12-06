@@ -32,10 +32,10 @@ public class GUIProjectPaneManager extends JPanel
 		panes = new HashMap<Tab, GUIProjectPane>();
 		activePane = new Tab(null, "_home");
 		
-		JPanel home = new JPanel();
-		home.setBackground(Color.WHITE);
 		JLabel title = new JLabel("Jon's Gahraj");
 		title.setFont(new Font("Tahoma", Font.BOLD, 48));
+		JPanel home = new JPanel();
+		home.setBackground(Color.WHITE);
 		home.add(title);
 		add(home, activePane.toString());
 		createPanes();

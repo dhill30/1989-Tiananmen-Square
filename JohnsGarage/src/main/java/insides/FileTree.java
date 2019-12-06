@@ -257,10 +257,8 @@ public class FileTree {
 			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
 			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
-			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
 			_root.add(ret);
-			System.out.println("1");
 			return ret;
 			
 		}

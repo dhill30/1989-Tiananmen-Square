@@ -8,10 +8,13 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Path;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -121,6 +124,12 @@ public class GUIMain
 	{
 		JButton addTab = new JButton("Add Tab");
 		setConstraints(0, 1, 1, 1, 0.1, 0.05);
+		mainFrame.add(addTab, constraints);
+		
+		final JButton removeTab = new JButton("Remove Tab");
+		setConstraints(1, 1, 1, 1, 0.1, 0.05);
+		mainFrame.add(removeTab, constraints);
+		
 		addTab.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -130,31 +139,35 @@ public class GUIMain
 				{
 					Tab temp = theFileTree.newTab(name);
 					projectManager.addPane(temp);
+					removeTab.setEnabled(true);
 				}
 				tabs.refresh();
 				System.out.println("Tab added...");
 			}
 		});
-		mainFrame.add(addTab, constraints);
 		
-		JButton removeTab = new JButton("Remove Tab");
-		setConstraints(1, 1, 1, 1, 0.1, 0.05);
 		removeTab.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				Tab selected = tabs.getSelected();
-				int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0)
+				if (selected.getName().equals("Projects")) JOptionPane.showConfirmDialog(mainFrame, "You are not allowed to remove \"Projects\"", "Error", JOptionPane.DEFAULT_OPTION);
+				else
 				{
-					theFileTree.delete(selected, theFileTree.getRoot());
-					projectManager.removePane(selected);
+					int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
+					if (confirm == 0)
+					{
+						theFileTree.delete(selected, theFileTree.getRoot());
+						projectManager.removePane(selected);
+					}
+					if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
+					System.out.println("Tab removed...");
 				}
 				tabs.refresh();
-				System.out.println("Tab removed...");
 			}
 		});
-		mainFrame.add(removeTab, constraints);
+		
+		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
 	}
 	
 	private void createExport()

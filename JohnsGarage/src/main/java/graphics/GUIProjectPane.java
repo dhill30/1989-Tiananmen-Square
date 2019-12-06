@@ -51,13 +51,7 @@ public class GUIProjectPane extends JPanel
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 		
-		JButton removeProject = new JButton("Remove Project");
-		setConstraints(1,0,1,1,0.1,0.05);
-		add(removeProject, constraints);
-		
-		JButton addProject = new JButton("Add Project");
-		setConstraints(2,0,1,1,0.1,0.05);
-		add(addProject, constraints);
+		createAddRemove();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -68,18 +62,12 @@ public class GUIProjectPane extends JPanel
 		scrollPane.setViewportView(projectList);
 		setConstraints(0,1,3,1,1,0.95);
 		add(scrollPane, constraints);
-		
-		addProject.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				String name = JOptionPane.showInputDialog("Enter Project name:", null);
-				if (name != null) theFileTree.newProject(name, theTab);
-				refresh();
-				System.out.println("Project added...");
-			}
-		});
-		
+	}
+	
+	private void createAddRemove()
+	{
+		final JButton removeProject = new JButton("Remove Project");
+		setConstraints(1,0,1,1,0.1,0.05);
 		removeProject.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -87,15 +75,29 @@ public class GUIProjectPane extends JPanel
 				Project selected = getSelected();
 				int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
 				if (confirm == 0) theFileTree.delete(selected, theTab);
+				if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
 				refresh();
 				System.out.println("Project removed...");
 			}
 		});
-	}
-	
-	public Project getSelected()
-	{
-		return (Project) projectList.getSelectedValue();
+		add(removeProject, constraints);
+		
+		JButton addProject = new JButton("Add Project");
+		setConstraints(2,0,1,1,0.1,0.05);
+		addProject.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = JOptionPane.showInputDialog("Enter Project name:", null);
+				if (name != null) theFileTree.newProject(name, theTab);
+				removeProject.setEnabled(true);
+				refresh();
+				System.out.println("Project added...");
+			}
+		});
+		add(addProject, constraints);
+		
+		if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
 	}
 	
 	public JList loadProjects()
@@ -127,6 +129,11 @@ public class GUIProjectPane extends JPanel
 		constraints.weighty = wy;
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.fill = GridBagConstraints.BOTH;
+	}
+	
+	public Project getSelected()
+	{
+		return (Project) projectList.getSelectedValue();
 	}
 	
 	private void refresh()
