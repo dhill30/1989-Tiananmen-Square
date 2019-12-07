@@ -19,13 +19,6 @@ public class GUIAbout extends JDialog
 	private static final long serialVersionUID = -5979766530012655663L;
 	
 	private static final Dimension FRAME_SIZE = new Dimension(550, 480);
-	
-//	public static void main(String[] args)
-//	{
-//		GUIAbout dialog = new GUIAbout();
-//		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//		dialog.setVisible(true);
-//	}
 
 	/**
 	 * Create the dialog.
@@ -36,6 +29,8 @@ public class GUIAbout extends JDialog
 		setSize(FRAME_SIZE);
 		setResizable(false);
 		setTitle("About");
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setVisible(true);
 		
 		JLabel logo = new JLabel();
 		logo.setIcon(new ImageIcon("src/main/resources/logo.png"));

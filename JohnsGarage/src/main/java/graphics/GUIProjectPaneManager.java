@@ -4,10 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import insides.FileTree;
 import insides.Project;
 import insides.Tab;
@@ -61,11 +59,7 @@ public class GUIProjectPaneManager extends JPanel
 	public void removePane(Tab t)
 	{
 		GUIProjectPane temp = panes.get(t);
-		if (activePane == t)
-		{
-			CardLayout layout = (CardLayout) this.getLayout();
-			layout.show(this, "_home");
-		}
+		if (activePane == t) ((CardLayout) this.getLayout()).show(this, "_home");
 		remove(temp);
 		panes.remove(t);
 	}
@@ -78,5 +72,6 @@ public class GUIProjectPaneManager extends JPanel
 	public void setPane(Tab t)
 	{
 		activePane = t;
+		((CardLayout) this.getLayout()).show(this, activePane.toString());
 	}
 }

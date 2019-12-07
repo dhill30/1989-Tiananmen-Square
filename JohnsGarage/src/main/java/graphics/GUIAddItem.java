@@ -6,7 +6,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Path;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import insides.FileTree;
 import insides.Project;
 
@@ -50,7 +48,17 @@ public class GUIAddItem extends JFrame
 		setBounds(200, 200, 400, 300);
 		setResizable(false);
 		getContentPane().setLayout(new GridBagLayout());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 		
+		createName();
+		createDesc();
+		createSelect();
+		createConfirm();
+	}
+	
+	private void createName()
+	{
 		JLabel name = new JLabel("Name:");
 		setConstraints(0,0,1,1,0.1,0.05);
 		add(name, constraints);
@@ -58,7 +66,10 @@ public class GUIAddItem extends JFrame
 		nameText = new JTextField();
 		setConstraints(1,0,3,1,0.9,0.05);
 		add(nameText, constraints);
-		
+	}
+	
+	private void createDesc()
+	{
 		JLabel desc = new JLabel("Description:");
 		setConstraints(0,1,4,1,1,0.05);
 		add(desc, constraints);
@@ -68,7 +79,10 @@ public class GUIAddItem extends JFrame
 		descText.setWrapStyleWord(true);
 		setConstraints(0,2,4,1,1,0.8);
 		add(descText, constraints);
-		
+	}
+	
+	private void createSelect()
+	{
 		JButton select = new JButton("Select File");
 		setConstraints(0,3,1,1,0.1,0.05);
 		add(select, constraints);
@@ -89,7 +103,10 @@ public class GUIAddItem extends JFrame
 				}
 			}
 		});
-		
+	}
+	
+	private void createConfirm()
+	{
 		JPanel emptyspace1 = new JPanel();
 		setConstraints(0,4,1,1,0.1,0.05);
 		add(emptyspace1, constraints);
@@ -102,6 +119,18 @@ public class GUIAddItem extends JFrame
 		setConstraints(2,4,1,1,0.1,0.05);
 		add(confirm, constraints);
 		
+		JButton cancel = new JButton("Cancel");
+		setConstraints(3,4,1,1,0.1,0.05);
+		add(cancel, constraints);
+		
+		cancel.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				GUIAddItem.this.dispose();
+			}
+		});
+		
 		confirm.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -112,18 +141,6 @@ public class GUIAddItem extends JFrame
 				String newName = nameText.getText() + extension;
 				theFileTree.newItem(newName, location, theProject);
 				theViewer.refresh();
-				GUIAddItem.this.dispose();
-			}
-		});
-		
-		JButton cancel = new JButton("Cancel");
-		setConstraints(3,4,1,1,0.1,0.05);
-		add(cancel, constraints);
-		
-		cancel.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
 				GUIAddItem.this.dispose();
 			}
 		});
