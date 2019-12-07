@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
 import insides.FileTree;
 import insides.Project;
 import insides.Tab;
@@ -73,11 +71,18 @@ public class GUIProjectPane extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				Project selected = getSelected();
-				int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0) theFileTree.delete(selected, theTab);
-				if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
+				if (selected == null) JOptionPane.showMessageDialog(GUIProjectPane.this, "You must select a Project", "Error", JOptionPane.ERROR_MESSAGE);
+				else
+				{
+					int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
+					if (confirm == 0)
+					{
+						theFileTree.delete(selected, theTab);
+						if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
+						System.out.println("Project removed...");
+					}
+				}
 				refresh();
-				System.out.println("Project removed...");
 			}
 		});
 		add(removeProject, constraints);
@@ -89,10 +94,13 @@ public class GUIProjectPane extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				String name = JOptionPane.showInputDialog("Enter Project name:", null);
-				if (name != null) theFileTree.newProject(name, theTab);
-				removeProject.setEnabled(true);
+				if (name != null && !name.equals(""))
+				{
+					theFileTree.newProject(name, theTab);
+					removeProject.setEnabled(true);
+					System.out.println("Project added...");
+				}
 				refresh();
-				System.out.println("Project added...");
 			}
 		});
 		add(addProject, constraints);
@@ -111,8 +119,7 @@ public class GUIProjectPane extends JPanel
 				if (e.getClickCount() == 2 || e.getClickCount() == 3)
 				{
 					Project p = (Project) list.getSelectedValue();
-					GUIProjectView temp = new GUIProjectView(theFileTree, p);
-					temp.setVisible(true);
+					new GUIProjectView(theFileTree, p);
 				}
 			}
 		});

@@ -1,20 +1,17 @@
 package graphics;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-
 import insides.FileTree;
 import insides.Tab;
 
@@ -66,8 +63,6 @@ public class GUITabPane extends JPanel
 				if (e.getClickCount() == 2 || e.getClickCount() == 3)
 				{
 					Tab t = (Tab) list.getSelectedValue();
-					CardLayout layout = (CardLayout) projectManager.getLayout();
-					layout.show(projectManager, t.toString());
 					projectManager.setPane(t);
 				}
 			}

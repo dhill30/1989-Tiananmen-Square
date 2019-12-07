@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
 import insides.FileTree;
 import insides.Item;
 import insides.Project;
@@ -52,9 +50,11 @@ public class GUIProjectView extends JFrame
 		constraints = new GridBagConstraints();
 		
 		setTitle(theProject.getName());
-		setBounds(100, 100, 900, 700);
+		setBounds(100, 100, 800, 600);
 		setMinimumSize(new Dimension(640, 480));
 		getContentPane().setLayout(new GridBagLayout());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 		
 		JLabel title = new JLabel(theProject.getName());
 		title.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -76,7 +76,7 @@ public class GUIProjectView extends JFrame
 	
 	private void createAddRemove()
 	{
-		JButton removeItem = new JButton("Remove Item");
+		final JButton removeItem = new JButton("Remove Item");
 		setConstraints(1,0,1,1,0.1,0.05);
 		removeItem.addActionListener(new ActionListener()
 		{
@@ -85,6 +85,7 @@ public class GUIProjectView extends JFrame
 				Item selected = (Item) itemList.getSelectedValue();
 				int confirm = JOptionPane.showConfirmDialog(GUIProjectView.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Item", JOptionPane.YES_NO_OPTION);
 				if (confirm == 0) theFileTree.delete(selected, theProject);
+				if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
 				refresh();
 				System.out.println("Item removed...");
 			}
@@ -97,11 +98,12 @@ public class GUIProjectView extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				GUIAddItem temp = new GUIAddItem(theFileTree, theProject, GUIProjectView.this);
-				temp.setVisible(true);
+				new GUIAddItem(theFileTree, theProject, GUIProjectView.this);
 			}
 		});
 		add(addItem, constraints);
+		
+		if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
 	}
 	
 	public JList loadItems()

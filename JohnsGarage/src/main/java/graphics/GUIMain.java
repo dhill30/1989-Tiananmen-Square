@@ -8,13 +8,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Path;
-import java.util.List;
-
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -72,7 +68,7 @@ public class GUIMain
 	private void initialize()
 	{
 		mainFrame = new JFrame("Jon's Gahraj");
-		mainFrame.setBounds(50, 50, 850, 650);
+		mainFrame.setBounds(50, 50, 800, 600);
 		mainFrame.setMinimumSize(new Dimension(640, 480));
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
@@ -99,9 +95,7 @@ public class GUIMain
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				GUIAbout aboutWindow = new GUIAbout();
-				aboutWindow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				aboutWindow.setVisible(true);
+				new GUIAbout();
 			}
 		});
 		menu.add(about);
@@ -135,14 +129,14 @@ public class GUIMain
 			public void actionPerformed(ActionEvent e)
 			{
 				String name = JOptionPane.showInputDialog(mainFrame, "Enter Tab name:", null);
-				if (name != null)
+				if (name != null && !name.equals(""))
 				{
 					Tab temp = theFileTree.newTab(name);
 					projectManager.addPane(temp);
 					removeTab.setEnabled(true);
+					System.out.println("Tab added...");
 				}
 				tabs.refresh();
-				System.out.println("Tab added...");
 			}
 		});
 		
@@ -151,7 +145,8 @@ public class GUIMain
 			public void actionPerformed(ActionEvent e)
 			{
 				Tab selected = tabs.getSelected();
-				if (selected.getName().equals("Projects")) JOptionPane.showConfirmDialog(mainFrame, "You are not allowed to remove \"Projects\"", "Error", JOptionPane.DEFAULT_OPTION);
+				if (selected == null) JOptionPane.showMessageDialog(mainFrame, "You must select a Tab", "Error", JOptionPane.ERROR_MESSAGE);
+				else if (selected.getName().equals("Projects")) JOptionPane.showMessageDialog(mainFrame, "You are not allowed to remove \"Projects\"", "Error", JOptionPane.ERROR_MESSAGE);
 				else
 				{
 					int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
@@ -159,9 +154,9 @@ public class GUIMain
 					{
 						theFileTree.delete(selected, theFileTree.getRoot());
 						projectManager.removePane(selected);
+						if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
+						System.out.println("Tab removed...");
 					}
-					if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
-					System.out.println("Tab removed...");
 				}
 				tabs.refresh();
 			}
