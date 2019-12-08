@@ -7,9 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.nio.file.Path;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -70,7 +68,7 @@ public class GUIMain
 	private void initialize()
 	{
 		mainFrame = new JFrame("Jon's Gahraj");
-		mainFrame.setBounds(50, 50, 850, 650);
+		mainFrame.setBounds(50, 50, 800, 600);
 		mainFrame.setMinimumSize(new Dimension(640, 480));
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
@@ -83,7 +81,7 @@ public class GUIMain
 		createTabPane();
 		createHomePane();
 		createTabButtons();
-		createImportExport();
+		createExport();
 		
 	}
 	
@@ -97,16 +95,7 @@ public class GUIMain
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				GUIAbout aboutWindow = null;
-				try
-				{
-					aboutWindow = new GUIAbout();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-				aboutWindow.setVisible(true);
+				new GUIAbout();
 			}
 		});
 		menu.add(about);
@@ -114,7 +103,6 @@ public class GUIMain
 	
 	private void createTabPane()
 	{
-		//GUITabPane tabs = new GUITabPane(theFileTree);
 		setConstraints(0, 0, 2, 1, 0.2, 0.95);
 		mainFrame.add(tabs, constraints);
 		tabs.setVisible(true);
@@ -130,60 +118,58 @@ public class GUIMain
 	{
 		JButton addTab = new JButton("Add Tab");
 		setConstraints(0, 1, 1, 1, 0.1, 0.05);
+		mainFrame.add(addTab, constraints);
+		
+		final JButton removeTab = new JButton("Remove Tab");
+		setConstraints(1, 1, 1, 1, 0.1, 0.05);
+		mainFrame.add(removeTab, constraints);
+		
 		addTab.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				String name = JOptionPane.showInputDialog(mainFrame, "Enter Tab name:", null);
-				if (name != null)
+				if (name != null && !name.equals(""))
 				{
 					Tab temp = theFileTree.newTab(name);
 					projectManager.addPane(temp);
+					removeTab.setEnabled(true);
+					System.out.println("Tab added...");
 				}
 				tabs.refresh();
-				System.out.println("Tab added...");
 			}
 		});
-		mainFrame.add(addTab, constraints);
 		
-		JButton removeTab = new JButton("Remove Tab");
-		setConstraints(1, 1, 1, 1, 0.1, 0.05);
 		removeTab.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				Tab selected = tabs.getSelected();
-				int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0)
+				if (selected == null) JOptionPane.showMessageDialog(mainFrame, "You must select a Tab", "Error", JOptionPane.ERROR_MESSAGE);
+				else if (selected.getName().equals("Projects")) JOptionPane.showMessageDialog(mainFrame, "You are not allowed to remove \"Projects\"", "Error", JOptionPane.ERROR_MESSAGE);
+				else
 				{
-					theFileTree.delete(selected, theFileTree.getRoot());
-					projectManager.removePane(selected);
+					int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
+					if (confirm == 0)
+					{
+						theFileTree.delete(selected, theFileTree.getRoot());
+						projectManager.removePane(selected);
+						if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
+						System.out.println("Tab removed...");
+					}
 				}
 				tabs.refresh();
-				System.out.println("Tab removed...");
 			}
 		});
-		mainFrame.add(removeTab, constraints);
+		
+		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
 	}
 	
-	private void createImportExport()
+	private void createExport()
 	{
 		JPanel emptyspace = new JPanel();
 		setConstraints(2, 1, 4, 1, 0.7, 0.05);
 		mainFrame.add(emptyspace, constraints);
-//		
-//		JButton importBtn = new JButton("Import");
-//		setConstraints(5, 1, 1, 1, 0.125, 0.05);
-//		importBtn.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				JFileChooser fileChooser = new JFileChooser();
-//				fileChooser.showOpenDialog(null);
-//				System.out.println("Imported...");
-//			}
-//		});
-//		mainFrame.add(importBtn, constraints);
 		
 		JButton exportBtn = new JButton("Export");
 		setConstraints(6, 1, 1, 1, 0.1, 0.05);

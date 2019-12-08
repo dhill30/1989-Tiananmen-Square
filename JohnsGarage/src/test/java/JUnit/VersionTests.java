@@ -12,7 +12,7 @@ public class VersionTests {
 	@Test
 	public void versionTest() throws IOException {
 		Version v = new Version();
-		assertEquals("0.0.1-SNAPSHOT",v.getVersion());
+		assertEquals("0.191.0",v.getVersion());
 	}	
 
 }
