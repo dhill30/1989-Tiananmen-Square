@@ -145,7 +145,7 @@ public class FileTree {
 	/**
 	 * Imports an Item from the FileSystem using a path, and putting it into the internal representation. 
 	 * It puts the item into the folder represented by the parent, with the name of the name selected plus the extension.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/8/2019
 	 * @author Sam
 	 * @param path
 	 * @param nameplusext
@@ -295,30 +295,6 @@ public class FileTree {
 	}
 	
 	/**
-	 * Builds and returns a new Category object. Changes are immediately made within the FileSystem.
-	 * Last Edited: 12/4/2019
-	 * @param name
-	 * @param parent
-	 * @return The new Category.
-	 */
-	public Category newCategory(String name, Project parent)
-	{
-		try
-		{
-			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
-			Files.createDirectory(temppath);
-			Category ret = new Category(temppath, name);
-			return ret;
-			
-		}
-		catch (IOException e)
-		{
-			System.out.println("Problem making new category: " + e.getMessage());
-		}
-		return null;
-	}
-	
-	/**
 	 * Builds and returns a new Item object. Changes are immediately made within the FileSystem.
 	 * Last Edited: 12/4/2019
 	 * @author Sam
@@ -370,7 +346,7 @@ public class FileTree {
 	{
 		File[] files = curPath.toFile().listFiles();
 		GFile temp = new GFile();
-		if(layer < 3) //if we are not yet at the item level
+		if(layer < 2) //if we are not yet at the item level
 		{
 			for(File f : files)
 			{
@@ -382,9 +358,6 @@ public class FileTree {
 						break;
 					case 1:
 						temp = new Project(f.toPath(), f.getName());
-						break;
-					case 2: 
-						temp = new Category(f.toPath(), f.getName());
 						break;
 				}
 				parent.add(temp);
