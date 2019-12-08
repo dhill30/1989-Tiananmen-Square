@@ -5,6 +5,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -32,6 +35,8 @@ public class GUIAddItem extends JFrame
 	private GridBagConstraints constraints;
 	
 	private JTextField nameText;
+	
+	private JTextArea descText;
 	
 	private Path location;
 	
@@ -74,7 +79,7 @@ public class GUIAddItem extends JFrame
 		setConstraints(0,1,4,1,1,0.05);
 		add(desc, constraints);
 		
-		JTextArea descText = new JTextArea();
+		descText = new JTextArea();
 		descText.setLineWrap(true);
 		descText.setWrapStyleWord(true);
 		setConstraints(0,2,4,1,1,0.8);
@@ -140,6 +145,19 @@ public class GUIAddItem extends JFrame
 				if (i > 0) extension = location.toString().substring(i);
 				String newName = nameText.getText() + extension;
 				theFileTree.newItem(newName, location, theProject);
+				
+				//Jim added this bit to keep track of item descriptions
+				File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
+				System.out.println(itemFile.getPath().toString());
+				FileWriter writer;
+				try {
+					writer = new FileWriter(itemFile, true);
+					writer.write("\r\nItem Name: " + nameText.getText() + "\r\nItem Description: " + descText.getText());
+					writer.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
 				theViewer.refresh();
 				GUIAddItem.this.dispose();
 			}

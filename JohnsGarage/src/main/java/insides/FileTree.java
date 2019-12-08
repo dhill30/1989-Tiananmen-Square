@@ -10,6 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -255,7 +256,6 @@ public class FileTree {
 		try
 		{
 			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
-			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
 			Tab ret = new Tab(temppath, name);
 			_root.add(ret);
@@ -284,6 +284,14 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
+			
+			// Jim added this bit too keep track of item descriptions
+			System.out.println(temppath.toString());
+			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
+			itemFile.createNewFile();
+			FileWriter writer = new FileWriter(itemFile);
+			writer.write("Project Name: " + name + "\r\n");
+			writer.close();
 			return ret;
 			
 		}

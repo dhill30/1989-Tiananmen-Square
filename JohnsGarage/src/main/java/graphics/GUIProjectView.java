@@ -13,6 +13,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,12 +46,16 @@ public class GUIProjectView extends JFrame
 	
 	private JList itemList;
 	
+	private File itemInfo;
+	
+	
+	
 	public GUIProjectView(FileTree fileTree, Project project)
 	{
 		theFileTree = fileTree;
 		theProject = project;
 		constraints = new GridBagConstraints();
-		
+		itemInfo = Paths.get(theProject.getPath() + "\\" + theProject.getName() + "-itemdata.txt").toFile();
 		setTitle(theProject.getName());
 		setBounds(100, 100, 800, 600);
 		setMinimumSize(new Dimension(640, 480));
@@ -118,14 +125,15 @@ public class GUIProjectView extends JFrame
 				{
 					Item select = (Item) list.getSelectedValue();
 					File file = select.getPath().toFile();
-					try
-					{
-						Desktop.getDesktop().open(file);
-					}
-					catch (IOException e1)
-					{
-						e1.printStackTrace();
-					}
+					new GUIItemView(file, itemInfo);
+//					try
+//					{
+//						Desktop.getDesktop().open(file);
+//					}
+//					catch (IOException e1)
+//					{
+//						e1.printStackTrace();
+//					}
 				}
 			}
 		});
