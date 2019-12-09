@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -42,14 +43,15 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 	private Path itemPath;
 	
-	public GUIItemView(final File theFile, File itemInfo) {
-		itemName = theFile.getName();
+	public GUIItemView(final Item theItem, FileTree tree) {
+		theFileTree = tree;
+		itemName = theItem.getName();
 		int i = itemName.toString().lastIndexOf('.');
 		String extension = "";
 		if (i > 0) extension = itemName.toString().substring(i);
 		itemName = itemName.replace(extension, "");
 		
-		setTitle(theFile.getName());
+		setTitle(theItem.getName());
 		setBounds(200, 200, 600, 400);
 		setMinimumSize(new Dimension(600, 400));
 		getContentPane().setLayout(new GridBagLayout());
@@ -62,13 +64,13 @@ private static final long serialVersionUID = 426473126064216924L;
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 
-		JTextArea desc = new JTextArea(getDesc(itemInfo));
+		JTextArea desc = new JTextArea(getDesc(theItem));
 		desc.setEditable(false);
 		desc.setFont(new Font("Tahoma", Font.BOLD, 24));
 		setConstraints(0,1,2,1,.3,0.95);
 		add(desc, constraints);
 		
-		JButton file = new JButton("Open " + theFile.getName().toString());
+		JButton file = new JButton("Open " + theItem.getName());
 		file.setFont(new Font("Tahoma", Font.BOLD, 24));
 		setConstraints(0,2,1,2,0.2,.05);
 		add(file, constraints);
@@ -78,7 +80,7 @@ private static final long serialVersionUID = 426473126064216924L;
 			{
 				try
 				{
-					Desktop.getDesktop().open(theFile);
+					Desktop.getDesktop().open(theItem.getPath().toFile());
 				}
 				catch (IOException e1)
 				{
@@ -100,22 +102,36 @@ private static final long serialVersionUID = 426473126064216924L;
 		});
 	}
 	
-	private String getDesc(File itemInfo) {
-		try {
-			Scanner scanner = new Scanner(itemInfo);
-			String tempItemName = "Item Name: " + itemName;
-			while(scanner.hasNextLine()) {
-				if(scanner.nextLine().equals(tempItemName)) {
-					itemDesc = scanner.nextLine();
-					break;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		int i = itemDesc.toString().indexOf(':');
-		return itemDesc.substring(i+1);
+	/**
+	 * gets the Description property of an Item.
+	 * @param item
+	 * @return
+	 */
+	private String getDesc(Item item)
+	{
+		Map<String, String> itemProps = theFileTree.getProperties(item);
+		if(itemProps == null) return "No Description.";
+		else itemDesc = itemProps.get("desc");
+		if(itemDesc == null) return "No Description.";
+		else return itemDesc;
 	}
+	
+//	private String getDesc(File itemInfo) {
+//		try {
+//			Scanner scanner = new Scanner(itemInfo);
+//			String tempItemName = "Item Name: " + itemName;
+//			while(scanner.hasNextLine()) {
+//				if(scanner.nextLine().equals(tempItemName)) {
+//					itemDesc = scanner.nextLine();
+//					break;
+//				}
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		int i = itemDesc.toString().indexOf(':');
+//		return itemDesc.substring(i+1);
+//	}
 
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{

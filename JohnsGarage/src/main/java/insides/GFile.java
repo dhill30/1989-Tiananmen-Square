@@ -7,10 +7,11 @@ package insides;
 
 import java.io.Serializable;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GFile implements Serializable{
 	private static final long serialVersionUID = -5646752043942919867L;
-	private Path _path;
+	private String _path;
 	private String _name;
 	
 	/**
@@ -32,7 +33,8 @@ public class GFile implements Serializable{
 	 */
 	public GFile(Path path, String name)
 	{
-		_path = path;
+		if(path == null) _path = null;
+		else _path = path.toAbsolutePath().toString();
 		_name = name;
 	}
 	
@@ -44,7 +46,7 @@ public class GFile implements Serializable{
 	 */
 	public Path getPath()
 	{
-		return _path;
+		return Paths.get(_path);
 	}
 	
 	/**

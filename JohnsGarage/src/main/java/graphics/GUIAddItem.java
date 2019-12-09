@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import insides.FileTree;
+import insides.Item;
 import insides.Project;
 
 public class GUIAddItem extends JFrame
@@ -144,19 +145,23 @@ public class GUIAddItem extends JFrame
 				int i = location.toString().lastIndexOf('.');
 				if (i > 0) extension = location.toString().substring(i);
 				String newName = nameText.getText() + extension;
-				theFileTree.newItem(newName, location, theProject);
+				Item temp = theFileTree.newItem(newName, location, theProject);
 				
-				//Jim added this bit to keep track of item descriptions
-				File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
-				System.out.println(itemFile.getPath().toString());
-				FileWriter writer;
-				try {
-					writer = new FileWriter(itemFile, true);
-					writer.write("\r\nItem Name: " + nameText.getText() + "\r\nItem Description: " + descText.getText());
-					writer.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				
+				//Jim added this bit to keep track of item descriptions 
+//				File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
+//				System.out.println(itemFile.getPath().toString());
+//				FileWriter writer; try {
+//					writer = new FileWriter(itemFile, true); writer.write("\r\nItem Name: " +
+//							nameText.getText() + "\r\nItem Description: " + descText.getText());
+//					writer.close();
+//					} catch (IOException e1) { 
+//						e1.printStackTrace(); 
+//					}
+				 
+				
+				//example of properties
+				theFileTree.changeProperty(temp, "desc", descText.getText());
 				
 				theViewer.refresh();
 				GUIAddItem.this.dispose();

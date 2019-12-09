@@ -115,9 +115,10 @@ public class FileTree {
 
 	/**
 	 * Takes a GFile and recursively deletes both its children and itself.
-	 * Calling this method will eliminate the reference passed to it.
+	 * Calling this method will eliminate the reference passed to it. It will not delete the parent, only remove the reference to the deleted file from the list of contents.
 	 * Last Edited: 12/4/2019
 	 * @param file
+	 * @param parent
 	 * @author Sam
 	 */
 	public void delete(GFile file, Folder parent)
@@ -285,15 +286,16 @@ public class FileTree {
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
 			
-			// Jim added this bit too keep track of item descriptions
-			System.out.println(temppath.toString());
-			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
-			itemFile.createNewFile();
-			FileWriter writer = new FileWriter(itemFile);
-			writer.write("Project Name: " + name + "\r\n");
-			writer.close();
+
+//			// Jim added this bit too keep track of item descriptions
+//			System.out.println(temppath.toString());
+//			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
+//			itemFile.createNewFile();
+//			FileWriter writer = new FileWriter(itemFile);
+//			writer.write("Project Name: " + name + "\r\n"); writer.close(); 
 			return ret;
-			
+			 
+			//pls use getProperties and changeProperty for this -Sam
 		}
 		catch (IOException e)
 		{
@@ -382,6 +384,12 @@ public class FileTree {
 		}
 	}
 	
+	/**
+	 * Returns a reference to the root. Really should only be used when deleting tabs.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return the root
+	 */
 	public Folder<Tab> getRoot()
 	{
 		return _root;
