@@ -19,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import insides.Category;
 import insides.FileTree;
 import insides.Tab;
 

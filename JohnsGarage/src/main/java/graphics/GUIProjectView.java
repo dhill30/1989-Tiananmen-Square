@@ -46,8 +46,6 @@ public class GUIProjectView extends JFrame
 	
 	private JList itemList;
 	
-	private File itemInfo;
-	
 	
 	
 	public GUIProjectView(FileTree fileTree, Project project)
@@ -55,7 +53,8 @@ public class GUIProjectView extends JFrame
 		theFileTree = fileTree;
 		theProject = project;
 		constraints = new GridBagConstraints();
-		itemInfo = Paths.get(theProject.getPath() + "\\" + theProject.getName() + "-itemdata.txt").toFile();
+		//itemInfo = Paths.get(theProject.getPath() + "\\" + theProject.getName() + "-itemdata.txt").toFile();
+		//no - Sam
 		setTitle(theProject.getName());
 		setBounds(100, 100, 800, 600);
 		setMinimumSize(new Dimension(640, 480));
@@ -124,8 +123,7 @@ public class GUIProjectView extends JFrame
 				if (e.getClickCount() == 2 || e.getClickCount() == 3)
 				{
 					Item select = (Item) list.getSelectedValue();
-					File file = select.getPath().toFile();
-					new GUIItemView(file, itemInfo);
+					new GUIItemView(select, theFileTree);
 //					try
 //					{
 //						Desktop.getDesktop().open(file);

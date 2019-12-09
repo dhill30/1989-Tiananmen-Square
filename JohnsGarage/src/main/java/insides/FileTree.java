@@ -286,15 +286,16 @@ public class FileTree {
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
 			
-			// Jim added this bit too keep track of item descriptions
-			System.out.println(temppath.toString());
-			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
-			itemFile.createNewFile();
-			FileWriter writer = new FileWriter(itemFile);
-			writer.write("Project Name: " + name + "\r\n");
-			writer.close();
+
+//			// Jim added this bit too keep track of item descriptions
+//			System.out.println(temppath.toString());
+//			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
+//			itemFile.createNewFile();
+//			FileWriter writer = new FileWriter(itemFile);
+//			writer.write("Project Name: " + name + "\r\n"); writer.close(); 
 			return ret;
-			
+			 
+			//pls use getProperties and changeProperty for this -Sam
 		}
 		catch (IOException e)
 		{
@@ -312,12 +313,8 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
-<<<<<<< HEAD
-	public Item newItem(String nameplusext, Path itempath, Category parent)
-=======
 	// temp change: parent to Project
 	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
->>>>>>> branch 'master' of https://github.com/SamuelDAdams/1989-Tiananmen-Square
 	{
 		try
 		{
