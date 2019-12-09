@@ -7,10 +7,11 @@ package insides;
 
 import java.io.Serializable;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GFile implements Serializable{
 	private static final long serialVersionUID = -5646752043942919867L;
-	private Path _path;
+	private String _path;
 	private String _name;
 	
 	/**
@@ -25,26 +26,28 @@ public class GFile implements Serializable{
 	
 	/**
 	 * Sets basic parameters for the file.
-	 * Last Edited: 12/4/2019
+	 * Turns out Paths aren't serializable, so converts to a string internal representation.
+	 * Last Edited: 12/9/2019
 	 * @author Sam
 	 * @param path
 	 * @param name
 	 */
 	public GFile(Path path, String name)
 	{
-		_path = path;
+		if(path == null) _path = null;
+		else _path = path.toAbsolutePath().toString();
 		_name = name;
 	}
 	
 	/**
 	 * Gets the Path to the object within the FileSystem.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/9/2019
 	 * @author Sam
 	 * @return the Path
 	 */
 	public Path getPath()
 	{
-		return _path;
+		return Paths.get(_path);
 	}
 	
 	/**
@@ -69,6 +72,9 @@ public class GFile implements Serializable{
 		_name = new String(newName);
 	}
 	
+	/**
+	 * @author Sam
+	 */
 	@Override
 	public String toString()
 	{

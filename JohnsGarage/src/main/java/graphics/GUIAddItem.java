@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.GridBagConstraints;
@@ -5,6 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import insides.FileTree;
+import insides.Item;
 import insides.Project;
 
 public class GUIAddItem extends JFrame
@@ -33,10 +40,18 @@ public class GUIAddItem extends JFrame
 	
 	private JTextField nameText;
 	
+	private JTextArea descText;
+	
 	private Path location;
 	
 	private JLabel filePath;
 	
+	/**
+	 * TODO
+	 * @param root
+	 * @param parent
+	 * @param viewer
+	 */
 	public GUIAddItem(FileTree root, Project parent, GUIProjectView viewer)
 	{
 		theFileTree = root;
@@ -57,6 +72,9 @@ public class GUIAddItem extends JFrame
 		createConfirm();
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createName()
 	{
 		JLabel name = new JLabel("Name:");
@@ -68,19 +86,25 @@ public class GUIAddItem extends JFrame
 		add(nameText, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createDesc()
 	{
 		JLabel desc = new JLabel("Description:");
 		setConstraints(0,1,4,1,1,0.05);
 		add(desc, constraints);
 		
-		JTextArea descText = new JTextArea();
+		descText = new JTextArea();
 		descText.setLineWrap(true);
 		descText.setWrapStyleWord(true);
 		setConstraints(0,2,4,1,1,0.8);
 		add(descText, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createSelect()
 	{
 		JButton select = new JButton("Select File");
@@ -105,6 +129,9 @@ public class GUIAddItem extends JFrame
 		});
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createConfirm()
 	{
 		JPanel emptyspace1 = new JPanel();
@@ -139,13 +166,39 @@ public class GUIAddItem extends JFrame
 				int i = location.toString().lastIndexOf('.');
 				if (i > 0) extension = location.toString().substring(i);
 				String newName = nameText.getText() + extension;
-				theFileTree.newItem(newName, location, theProject);
+				Item temp = theFileTree.newItem(newName, location, theProject);
+				
+				
+				//Jim added this bit to keep track of item descriptions 
+//				File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
+//				System.out.println(itemFile.getPath().toString());
+//				FileWriter writer; try {
+//					writer = new FileWriter(itemFile, true); writer.write("\r\nItem Name: " +
+//							nameText.getText() + "\r\nItem Description: " + descText.getText());
+//					writer.close();
+//					} catch (IOException e1) { 
+//						e1.printStackTrace(); 
+//					}
+				 
+				
+				//example of properties
+				theFileTree.changeProperty(temp, "desc", descText.getText());
+				
 				theViewer.refresh();
 				GUIAddItem.this.dispose();
 			}
 		});
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;

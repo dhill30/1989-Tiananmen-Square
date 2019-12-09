@@ -7,7 +7,7 @@ package insides;
 
 import java.nio.file.Path;
 
-public class Project extends Folder<Category>{
+public class Project extends Folder<Item>{
 	private static final long serialVersionUID = 579981190786066767L;
 	
 	/**

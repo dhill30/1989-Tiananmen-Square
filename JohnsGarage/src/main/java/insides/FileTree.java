@@ -10,6 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,7 +37,7 @@ public class FileTree {
 	
 	/**
 	 * Initializes values for the FileTree class.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/6/2019
 	 * @author Sam
 	 * @param file
 	 */
@@ -114,9 +115,10 @@ public class FileTree {
 
 	/**
 	 * Takes a GFile and recursively deletes both its children and itself.
-	 * Calling this method will eliminate the reference passed to it.
+	 * Calling this method will eliminate the reference passed to it. It will not delete the parent, only remove the reference to the deleted file from the list of contents.
 	 * Last Edited: 12/4/2019
 	 * @param file
+	 * @param parent
 	 * @author Sam
 	 */
 	public void delete(GFile file, Folder parent)
@@ -145,7 +147,7 @@ public class FileTree {
 	/**
 	 * Imports an Item from the FileSystem using a path, and putting it into the internal representation. 
 	 * It puts the item into the folder represented by the parent, with the name of the name selected plus the extension.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/8/2019
 	 * @author Sam
 	 * @param path
 	 * @param nameplusext
@@ -255,7 +257,6 @@ public class FileTree {
 		try
 		{
 			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
-			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
 			Tab ret = new Tab(temppath, name);
 			_root.add(ret);
@@ -284,36 +285,21 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
-			return ret;
 			
+
+//			// Jim added this bit too keep track of item descriptions
+//			System.out.println(temppath.toString());
+//			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
+//			itemFile.createNewFile();
+//			FileWriter writer = new FileWriter(itemFile);
+//			writer.write("Project Name: " + name + "\r\n"); writer.close(); 
+			return ret;
+			 
+			//pls use getProperties and changeProperty for this -Sam
 		}
 		catch (IOException e)
 		{
 			System.out.println("Problem making new Project: " + e.getMessage());
-		}
-		return null;
-	}
-	
-	/**
-	 * Builds and returns a new Category object. Changes are immediately made within the FileSystem.
-	 * Last Edited: 12/4/2019
-	 * @param name
-	 * @param parent
-	 * @return The new Category.
-	 */
-	public Category newCategory(String name, Project parent)
-	{
-		try
-		{
-			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
-			Files.createDirectory(temppath);
-			Category ret = new Category(temppath, name);
-			return ret;
-			
-		}
-		catch (IOException e)
-		{
-			System.out.println("Problem making new category: " + e.getMessage());
 		}
 		return null;
 	}
@@ -370,7 +356,7 @@ public class FileTree {
 	{
 		File[] files = curPath.toFile().listFiles();
 		GFile temp = new GFile();
-		if(layer < 3) //if we are not yet at the item level
+		if(layer < 2) //if we are not yet at the item level
 		{
 			for(File f : files)
 			{
@@ -382,9 +368,6 @@ public class FileTree {
 						break;
 					case 1:
 						temp = new Project(f.toPath(), f.getName());
-						break;
-					case 2: 
-						temp = new Category(f.toPath(), f.getName());
 						break;
 				}
 				parent.add(temp);
@@ -401,6 +384,12 @@ public class FileTree {
 		}
 	}
 	
+	/**
+	 * Returns a reference to the root. Really should only be used when deleting tabs.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return the root
+	 */
 	public Folder<Tab> getRoot()
 	{
 		return _root;

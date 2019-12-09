@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Color;
@@ -13,6 +16,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,10 +33,6 @@ import insides.Project;
 
 public class GUIProjectView extends JFrame
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 426473126064216924L;
 	
 	private FileTree theFileTree;
@@ -43,12 +45,18 @@ public class GUIProjectView extends JFrame
 	
 	private JList itemList;
 	
+	/**
+	 * TODO
+	 * @param fileTree
+	 * @param project
+	 */
 	public GUIProjectView(FileTree fileTree, Project project)
 	{
 		theFileTree = fileTree;
 		theProject = project;
 		constraints = new GridBagConstraints();
-		
+		//itemInfo = Paths.get(theProject.getPath() + "\\" + theProject.getName() + "-itemdata.txt").toFile();
+		//no - Sam
 		setTitle(theProject.getName());
 		setBounds(100, 100, 800, 600);
 		setMinimumSize(new Dimension(640, 480));
@@ -74,6 +82,9 @@ public class GUIProjectView extends JFrame
 		add(scrollPane, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createAddRemove()
 	{
 		final JButton removeItem = new JButton("Remove Item");
@@ -106,6 +117,12 @@ public class GUIProjectView extends JFrame
 		if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
 	}
 	
+	/**
+	 * Builds the list of Items contained within the project.
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
+	 * @return the JList of Items.
+	 */
 	public JList loadItems()
 	{
 		final JList list = new JList(theProject.getContents().toArray());
@@ -117,21 +134,30 @@ public class GUIProjectView extends JFrame
 				if (e.getClickCount() == 2 || e.getClickCount() == 3)
 				{
 					Item select = (Item) list.getSelectedValue();
-					File file = select.getPath().toFile();
-					try
-					{
-						Desktop.getDesktop().open(file);
-					}
-					catch (IOException e1)
-					{
-						e1.printStackTrace();
-					}
+					new GUIItemView(select, theFileTree);
+//					try
+//					{
+//						Desktop.getDesktop().open(file);
+//					}
+//					catch (IOException e1)
+//					{
+//						e1.printStackTrace();
+//					}
 				}
 			}
 		});
 		return list;
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;
@@ -144,6 +170,9 @@ public class GUIProjectView extends JFrame
 		constraints.fill = GridBagConstraints.BOTH;
 	}
 	
+	/**
+	 * TODO
+	 */
 	public void refresh()
 	{
 		itemList = loadItems();
