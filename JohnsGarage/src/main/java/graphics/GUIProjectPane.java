@@ -7,7 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -15,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
 import insides.FileTree;
 import insides.Project;
 import insides.Tab;
@@ -49,13 +49,7 @@ public class GUIProjectPane extends JPanel
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 		
-		JButton removeProject = new JButton("Remove Project");
-		setConstraints(1,0,1,1,0.1,0.05);
-		add(removeProject, constraints);
-		
-		JButton addProject = new JButton("Add Project");
-		setConstraints(2,0,1,1,0.1,0.05);
-		add(addProject, constraints);
+		createAddRemove();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -66,35 +60,69 @@ public class GUIProjectPane extends JPanel
 		scrollPane.setViewportView(projectList);
 		setConstraints(0,1,3,1,1,0.95);
 		add(scrollPane, constraints);
+	}
+	
+	private void createAddRemove()
+	{
+		final JButton removeProject = new JButton("Remove Project");
+		setConstraints(1,0,1,1,0.1,0.05);
+		removeProject.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Project selected = getSelected();
+				if (selected == null) JOptionPane.showMessageDialog(GUIProjectPane.this, "You must select a Project", "Error", JOptionPane.ERROR_MESSAGE);
+				else
+				{
+					int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
+					if (confirm == 0)
+					{
+						theFileTree.delete(selected, theTab);
+						if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
+						System.out.println("Project removed...");
+					}
+				}
+				refresh();
+			}
+		});
+		add(removeProject, constraints);
 		
+		JButton addProject = new JButton("Add Project");
+		setConstraints(2,0,1,1,0.1,0.05);
 		addProject.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				String name = JOptionPane.showInputDialog("Enter Project name:", null);
-				if (name != null) theFileTree.newProject(name, theTab);
+				if (name != null && !name.equals(""))
+				{
+					theFileTree.newProject(name, theTab);
+					removeProject.setEnabled(true);
+					System.out.println("Project added...");
+				}
 				refresh();
-				System.out.println("Project added...");
 			}
 		});
+		add(addProject, constraints);
 		
-		removeProject.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				Project selected = (Project) projectList.getSelectedValue();
-				int confirm = JOptionPane.showConfirmDialog(GUIProjectPane.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Project", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0) theFileTree.delete(selected, theTab);
-				refresh();
-				System.out.println("Project removed...");
-			}
-		});
+		if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
 	}
 	
 	public JList loadProjects()
 	{
-		JList list = new JList(theTab.getContents().toArray());
+		final JList list = new JList(theTab.getContents().toArray());
 		list.setFont(new Font("Tahoma", Font.BOLD, 20));
+		list.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2 || e.getClickCount() == 3)
+				{
+					Project p = (Project) list.getSelectedValue();
+					new GUIProjectView(theFileTree, p);
+				}
+			}
+		});
 		return list;
 	}
 	
@@ -108,6 +136,11 @@ public class GUIProjectPane extends JPanel
 		constraints.weighty = wy;
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.fill = GridBagConstraints.BOTH;
+	}
+	
+	public Project getSelected()
+	{
+		return (Project) projectList.getSelectedValue();
 	}
 	
 	private void refresh()

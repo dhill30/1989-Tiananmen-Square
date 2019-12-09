@@ -1,66 +1,60 @@
 package graphics;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
+import java.io.IOException;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import insides.Version;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.io.IOException;
-import java.util.Properties;
-
-public class GUIAbout extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class GUIAbout extends JDialog
+{
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		try {
-			GUIAbout dialog = new GUIAbout();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+	private static final long serialVersionUID = -5979766530012655663L;
+	
+	private static final Dimension FRAME_SIZE = new Dimension(550, 480);
 
 	/**
 	 * Create the dialog.
-	 * @throws IOException 
 	 */
-	public GUIAbout() throws IOException {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new FlowLayout());
+	public GUIAbout()
+	{
+		setLayout(null);
+		setSize(FRAME_SIZE);
+		setResizable(false);
+		setTitle("About");
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setVisible(true);
 		
+		JLabel logo = new JLabel();
+		logo.setIcon(new ImageIcon("src/main/resources/logo.png"));
+		logo.setBounds(-231, 105, 793, 322);
+		add(logo);
 		
+		JLabel info = new JLabel("Developed By: Samuel Adams, Mike Fly, Dylan Hill, and James McHugh", SwingConstants.CENTER);
+		info.setFont(info.getFont().deriveFont(15f));
+		info.setBounds(10, 11, 521, 36);
+		add(info);
 		
-		JLabel lblDevelopedByDylan = new JLabel("Developed By Dylan Hill, Mike Fly, Samuel Adams, and James McHugh");
-		contentPanel.add(lblDevelopedByDylan);
-		
-		Version v = new Version();
-		
-		JLabel lblVersionNumber = new JLabel("Version Number: " + v.getVersion());
-		contentPanel.add(lblVersionNumber);
-		
-		
-		
-		
-		
-		
+		Version ver = null;
+		try
+		{
+			ver = new Version();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Could not fetch version number");
+			e.printStackTrace();
+		}
+		JLabel version = new JLabel("Version Number: " + ver.getVersion(), SwingConstants.CENTER);
+		version.setFont(version.getFont().deriveFont(16f));
+		version.setBounds(10, 58, 521, 36);
+		add(version);
 	}
-
 }

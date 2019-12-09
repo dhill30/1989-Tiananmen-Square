@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 public class FileTree {
@@ -147,13 +146,14 @@ public class FileTree {
 	/**
 	 * Imports an Item from the FileSystem using a path, and putting it into the internal representation. 
 	 * It puts the item into the folder represented by the parent, with the name of the name selected plus the extension.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/8/2019
 	 * @author Sam
 	 * @param path
 	 * @param nameplusext
 	 * @param parent
 	 */
-	public void importItem(Path path, String nameplusext, Category parent)
+	// temp change: parent to Project
+	public void importItem(Path path, String nameplusext, Project parent)
 	{
 		try
 		{
@@ -258,10 +258,8 @@ public class FileTree {
 			Path temppath = Paths.get(_root.getPath().toString() + "\\" + name);
 			System.out.println(temppath.toString());
 			Files.createDirectory(temppath);
-			System.out.println("1");
 			Tab ret = new Tab(temppath, name);
 			_root.add(ret);
-			System.out.println("1");
 			return ret;
 			
 		}
@@ -298,30 +296,6 @@ public class FileTree {
 	}
 	
 	/**
-	 * Builds and returns a new Category object. Changes are immediately made within the FileSystem.
-	 * Last Edited: 12/4/2019
-	 * @param name
-	 * @param parent
-	 * @return The new Category.
-	 */
-	public Category newCategory(String name, Project parent)
-	{
-		try
-		{
-			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
-			Files.createDirectory(temppath);
-			Category ret = new Category(temppath, name);
-			return ret;
-			
-		}
-		catch (IOException e)
-		{
-			System.out.println("Problem making new category: " + e.getMessage());
-		}
-		return null;
-	}
-	
-	/**
 	 * Builds and returns a new Item object. Changes are immediately made within the FileSystem.
 	 * Last Edited: 12/4/2019
 	 * @author Sam
@@ -330,13 +304,19 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
+<<<<<<< HEAD
 	public Item newItem(String nameplusext, Path itempath, Category parent)
+=======
+	// temp change: parent to Project
+	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
+>>>>>>> branch 'master' of https://github.com/SamuelDAdams/1989-Tiananmen-Square
 	{
 		try
 		{
 			Path temppath = Paths.get(parent.getPath().toString() + "\\" + nameplusext);
 			Files.copy(itempath, temppath);
 			Item ret = new Item(temppath, nameplusext);
+			parent.add(ret);
 			return ret;
 			
 		}
@@ -371,7 +351,7 @@ public class FileTree {
 	{
 		File[] files = curPath.toFile().listFiles();
 		GFile temp = new GFile();
-		if(layer < 3) //if we are not yet at the item level
+		if(layer < 2) //if we are not yet at the item level
 		{
 			for(File f : files)
 			{
@@ -383,9 +363,6 @@ public class FileTree {
 						break;
 					case 1:
 						temp = new Project(f.toPath(), f.getName());
-						break;
-					case 2: 
-						temp = new Category(f.toPath(), f.getName());
 						break;
 				}
 				parent.add(temp);
