@@ -72,6 +72,9 @@ public class GFile implements Serializable{
 		_name = new String(newName);
 	}
 	
+	/**
+	 * @author Sam
+	 */
 	@Override
 	public String toString()
 	{

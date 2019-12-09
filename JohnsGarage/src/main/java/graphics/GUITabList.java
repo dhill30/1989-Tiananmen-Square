@@ -28,6 +28,9 @@ public class GUITabList extends JPanel {
 	
 	private DefaultListModel<Tab> model;
 	
+	/**
+	 * TODO
+	 */
 	public GUITabList() {
 		setLayout(null);
 		
@@ -51,7 +54,10 @@ public class GUITabList extends JPanel {
 	}
 	
 	
-	
+	/**
+	 * TODO
+	 * @param theFileTree
+	 */
 	public void loadTabs(FileTree theFileTree) {
 
 		System.out.println("loadTabs");

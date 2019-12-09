@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Desktop;
@@ -142,6 +145,15 @@ private static final long serialVersionUID = 426473126064216924L;
 //		return itemDesc.substring(i+1);
 //	}
 
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;

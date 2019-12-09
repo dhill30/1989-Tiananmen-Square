@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package insides;
 
 import java.io.IOException;
@@ -7,6 +10,10 @@ public class Version {
 	
 	static String version_number = "";
 	
+	/**
+	 * TODO
+	 * @throws IOException
+	 */
 	public Version() throws IOException
 	{
 		final Properties properties = new Properties();
@@ -14,6 +21,10 @@ public class Version {
 		version_number = properties.getProperty("versionNum");
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public String getVersion()
 	{
 		return version_number;

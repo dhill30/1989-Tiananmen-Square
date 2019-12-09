@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Color;
@@ -30,10 +33,6 @@ import insides.Project;
 
 public class GUIProjectView extends JFrame
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 426473126064216924L;
 	
 	private FileTree theFileTree;
@@ -46,8 +45,11 @@ public class GUIProjectView extends JFrame
 	
 	private JList itemList;
 	
-	
-	
+	/**
+	 * TODO
+	 * @param fileTree
+	 * @param project
+	 */
 	public GUIProjectView(FileTree fileTree, Project project)
 	{
 		theFileTree = fileTree;
@@ -80,6 +82,9 @@ public class GUIProjectView extends JFrame
 		add(scrollPane, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createAddRemove()
 	{
 		final JButton removeItem = new JButton("Remove Item");
@@ -144,6 +149,15 @@ public class GUIProjectView extends JFrame
 		return list;
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;
@@ -156,6 +170,9 @@ public class GUIProjectView extends JFrame
 		constraints.fill = GridBagConstraints.BOTH;
 	}
 	
+	/**
+	 * TODO
+	 */
 	public void refresh()
 	{
 		itemList = loadItems();

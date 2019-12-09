@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.GridBagConstraints;
@@ -43,6 +46,12 @@ public class GUIAddItem extends JFrame
 	
 	private JLabel filePath;
 	
+	/**
+	 * TODO
+	 * @param root
+	 * @param parent
+	 * @param viewer
+	 */
 	public GUIAddItem(FileTree root, Project parent, GUIProjectView viewer)
 	{
 		theFileTree = root;
@@ -63,6 +72,9 @@ public class GUIAddItem extends JFrame
 		createConfirm();
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createName()
 	{
 		JLabel name = new JLabel("Name:");
@@ -74,6 +86,9 @@ public class GUIAddItem extends JFrame
 		add(nameText, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createDesc()
 	{
 		JLabel desc = new JLabel("Description:");
@@ -87,6 +102,9 @@ public class GUIAddItem extends JFrame
 		add(descText, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createSelect()
 	{
 		JButton select = new JButton("Select File");
@@ -111,6 +129,9 @@ public class GUIAddItem extends JFrame
 		});
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createConfirm()
 	{
 		JPanel emptyspace1 = new JPanel();
@@ -169,6 +190,15 @@ public class GUIAddItem extends JFrame
 		});
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;
