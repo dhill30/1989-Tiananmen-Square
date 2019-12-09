@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class FileTree {
@@ -121,27 +122,27 @@ public class FileTree {
 	 * @author Sam
 	 */
 	public void delete(GFile file, Folder parent)
-	{
-		try
-		{
-			if(!file.getClass().getSimpleName().equals("Item"))
-			{
-				Folder fold = (Folder) file;
-				List<Folder> contents = fold.getContents();
-				while(!contents.isEmpty())
-				{
-					delete(contents.get(0), (Folder) file);
-				}
-			}
-			Files.delete(file.getPath());
-			parent.getContents().remove(file);
-			file = null;
-		}
-		catch (IOException e)
-		{
-			System.out.println("Problem deleting files: " + e.getMessage());
-		}
-	}
+    {
+        try
+        {
+            if(!file.getClass().getSimpleName().equals("Item"))
+            {
+                Folder fold = (Folder) file;
+                List<Folder> contents = fold.getContents();
+                while(!contents.isEmpty())
+                {
+                    delete(contents.get(0), (Folder) file);
+                }
+            }
+            Files.delete(file.getPath());
+            parent.getContents().remove(file);
+            file = null;
+        }
+        catch (IOException e)
+        {
+            System.out.println("Problem deleting files: " + e.getMessage());
+        }
+    }
 	
 	/**
 	 * Imports an Item from the FileSystem using a path, and putting it into the internal representation. 
@@ -285,6 +286,7 @@ public class FileTree {
 			Path temppath = Paths.get(parent.getPath().toString() + "\\" + name);
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
+			parent.add(ret);
 			return ret;
 			
 		}
