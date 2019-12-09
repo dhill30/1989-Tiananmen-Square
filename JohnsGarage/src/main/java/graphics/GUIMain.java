@@ -1,3 +1,8 @@
+/**
+ * The main GUI window for the project, and also the entry point.
+ * Last Edited: 12/4/2019
+ * @author Dylan
+ */
 package graphics;
 
 import java.awt.Dimension;
@@ -28,14 +33,25 @@ public class GUIMain
 	private static FileTree theFileTree;
 	
 	private GUITabPane tabs;
-	
+
 	private GUIProjectPaneManager projectManager;
 	
+	/**
+	 * Basic constructor.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private GUIMain()
 	{
 		initialize();
 	}
 	
+	/**
+	 * Starts the program and initializes the FileTree
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		theFileTree = new FileTree();
@@ -65,6 +81,11 @@ public class GUIMain
 		});
 	}
 	
+	/**
+	 * Creates the basic UI components for the main UI window.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void initialize()
 	{
 		mainFrame = new JFrame("Jon's Gahraj");
@@ -85,6 +106,11 @@ public class GUIMain
 		
 	}
 	
+	/**
+	 * Creates the MenuBar used to access the about screen
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createMenu()
 	{
 		JMenuBar menu = new JMenuBar();
@@ -101,6 +127,11 @@ public class GUIMain
 		menu.add(about);
 	}
 	
+	/**
+	 * Sets graphical settings for the GUITabPane
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createTabPane()
 	{
 		setConstraints(0, 0, 2, 1, 0.2, 0.95);
@@ -108,12 +139,22 @@ public class GUIMain
 		tabs.setVisible(true);
 	}
 	
+	/**
+	 * Creates the center window used to display projects once a tab is selected.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createHomePane()
 	{
 		setConstraints(2, 0, 5, 1, 0.8, 0.95);
 		mainFrame.add(projectManager, constraints);
 	}
 	
+	/**
+	 * Builds the add and remove tab buttons below the tab list, and the actions associated with them.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
 	private void createTabButtons()
 	{
 		JButton addTab = new JButton("Add Tab");
@@ -164,7 +205,7 @@ public class GUIMain
 		
 		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
 	}
-	
+
 	private void createExport()
 	{
 		JPanel emptyspace = new JPanel();

@@ -115,9 +115,10 @@ public class FileTree {
 
 	/**
 	 * Takes a GFile and recursively deletes both its children and itself.
-	 * Calling this method will eliminate the reference passed to it.
+	 * Calling this method will eliminate the reference passed to it. It will not delete the parent, only remove the reference to the deleted file from the list of contents.
 	 * Last Edited: 12/4/2019
 	 * @param file
+	 * @param parent
 	 * @author Sam
 	 */
 	public void delete(GFile file, Folder parent)
@@ -311,8 +312,12 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
+<<<<<<< HEAD
+	public Item newItem(String nameplusext, Path itempath, Category parent)
+=======
 	// temp change: parent to Project
 	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
+>>>>>>> branch 'master' of https://github.com/SamuelDAdams/1989-Tiananmen-Square
 	{
 		try
 		{
@@ -382,6 +387,12 @@ public class FileTree {
 		}
 	}
 	
+	/**
+	 * Returns a reference to the root. Really should only be used when deleting tabs.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return the root
+	 */
 	public Folder<Tab> getRoot()
 	{
 		return _root;
