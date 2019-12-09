@@ -205,15 +205,8 @@ public class GUIMain
 		
 		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
 	}
-	
-<<<<<<< HEAD
-	/**
-	 * 
-	 */
-	private void createImportExport()
-=======
+
 	private void createExport()
->>>>>>> branch 'master' of https://github.com/SamuelDAdams/1989-Tiananmen-Square
 	{
 		JPanel emptyspace = new JPanel();
 		setConstraints(2, 1, 4, 1, 0.7, 0.05);
