@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.CardLayout;
@@ -12,9 +15,6 @@ import insides.Tab;
 
 public class GUIProjectPaneManager extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8240251102196104852L;
 
 	private FileTree theFileTree;
@@ -23,6 +23,10 @@ public class GUIProjectPaneManager extends JPanel
 	
 	private Tab activePane;
 	
+	/**
+	 * TODO
+	 * @param fileTree
+	 */
 	public GUIProjectPaneManager(FileTree fileTree)
 	{
 		setLayout(new CardLayout());
@@ -39,6 +43,9 @@ public class GUIProjectPaneManager extends JPanel
 		createPanes();
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createPanes()
 	{
 		for (Tab t : theFileTree.getTabs())
@@ -49,6 +56,10 @@ public class GUIProjectPaneManager extends JPanel
 		}
 	}
 	
+	/**
+	 * TODO
+	 * @param t
+	 */
 	public void addPane(Tab t)
 	{
 		GUIProjectPane newPane = new GUIProjectPane(theFileTree, t);
@@ -56,6 +67,10 @@ public class GUIProjectPaneManager extends JPanel
 		add(newPane, t.toString());
 	}
 	
+	/**
+	 * TODO
+	 * @param t
+	 */
 	public void removePane(Tab t)
 	{
 		GUIProjectPane temp = panes.get(t);
@@ -64,11 +79,19 @@ public class GUIProjectPaneManager extends JPanel
 		panes.remove(t);
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public Project getSelected()
 	{
 		return panes.get(activePane).getSelected();
 	}
 	
+	/**
+	 * TODO
+	 * @param t
+	 */
 	public void setPane(Tab t)
 	{
 		activePane = t;

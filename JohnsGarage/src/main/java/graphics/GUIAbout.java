@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Dimension;
@@ -12,16 +15,13 @@ import insides.Version;
 
 public class GUIAbout extends JDialog
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5979766530012655663L;
 	
 	private static final Dimension FRAME_SIZE = new Dimension(550, 480);
 
 	/**
 	 * Create the dialog.
+	 * @author James, Mike
 	 */
 	public GUIAbout()
 	{

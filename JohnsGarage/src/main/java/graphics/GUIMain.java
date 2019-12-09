@@ -206,6 +206,9 @@ public class GUIMain
 		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
 	}
 
+	/**
+	 * TODO
+	 */
 	private void createExport()
 	{
 		JPanel emptyspace = new JPanel();
@@ -238,6 +241,15 @@ public class GUIMain
 		mainFrame.add(exportBtn, constraints);
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;

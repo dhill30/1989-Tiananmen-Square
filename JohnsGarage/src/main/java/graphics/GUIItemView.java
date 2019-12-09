@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Desktop;
@@ -43,6 +46,13 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 	private Path itemPath;
 	
+	/**
+	 * Builds the GUIItemView, used for seeing descriptions and giving options for dealing with Items.
+	 * Last Edited: 12/9/2019
+	 * @author James
+	 * @param theItem
+	 * @param tree
+	 */
 	public GUIItemView(final Item theItem, FileTree tree) {
 		theFileTree = tree;
 		itemName = theItem.getName();
@@ -104,8 +114,10 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 	/**
 	 * gets the Description property of an Item.
+	 * Last Edited: 12/9/2019
+	 * @author Sam
 	 * @param item
-	 * @return
+	 * @return the Description
 	 */
 	private String getDesc(Item item)
 	{
@@ -133,6 +145,15 @@ private static final long serialVersionUID = 426473126064216924L;
 //		return itemDesc.substring(i+1);
 //	}
 
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;

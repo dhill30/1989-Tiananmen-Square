@@ -17,9 +17,6 @@ import insides.Tab;
 
 public class GUITabPane extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6346402233257430593L;
 	
 	private FileTree theFileTree;
@@ -30,6 +27,11 @@ public class GUITabPane extends JPanel
 	
 	private JScrollPane scrollPane;
 	
+	/**
+	 * TODO
+	 * @param fileTree
+	 * @param pm
+	 */
 	public GUITabPane(FileTree fileTree, GUIProjectPaneManager pm)
 	{
 		setLayout(new BorderLayout());
@@ -51,6 +53,10 @@ public class GUITabPane extends JPanel
 		scrollPane.setColumnHeaderView(title);
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public JList loadTabs()
 	{
 		List<Tab> tabs = theFileTree.getTabs();
@@ -70,11 +76,18 @@ public class GUITabPane extends JPanel
 		return list;
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public Tab getSelected()
 	{
 		return (Tab) tabList.getSelectedValue();
 	}
 	
+	/**
+	 * TODO
+	 */
 	public void refresh()
 	{
 		tabList = loadTabs();

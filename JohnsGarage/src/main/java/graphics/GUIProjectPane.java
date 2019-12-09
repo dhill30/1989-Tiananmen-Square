@@ -1,3 +1,6 @@
+/**
+ * TODO
+ */
 package graphics;
 
 import java.awt.Color;
@@ -22,9 +25,6 @@ import insides.Tab;
 
 public class GUIProjectPane extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4753492397994159278L;
 
 	private FileTree theFileTree;
@@ -37,6 +37,11 @@ public class GUIProjectPane extends JPanel
 	
 	private GridBagConstraints constraints;
 	
+	/**
+	 * TODO
+	 * @param fileTree
+	 * @param currentTab
+	 */
 	public GUIProjectPane(FileTree fileTree, Tab currentTab)
 	{
 		theFileTree = fileTree;
@@ -62,6 +67,9 @@ public class GUIProjectPane extends JPanel
 		add(scrollPane, constraints);
 	}
 	
+	/**
+	 * TODO
+	 */
 	private void createAddRemove()
 	{
 		final JButton removeProject = new JButton("Remove Project");
@@ -108,6 +116,10 @@ public class GUIProjectPane extends JPanel
 		if (theTab.getContents().size() == 0) removeProject.setEnabled(false);
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public JList loadProjects()
 	{
 		final JList list = new JList(theTab.getContents().toArray());
@@ -126,6 +138,15 @@ public class GUIProjectPane extends JPanel
 		return list;
 	}
 	
+	/**
+	 * TODO
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;
