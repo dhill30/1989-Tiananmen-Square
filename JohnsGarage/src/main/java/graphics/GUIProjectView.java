@@ -112,6 +112,12 @@ public class GUIProjectView extends JFrame
 		if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
 	}
 	
+	/**
+	 * Builds the list of Items contained within the project.
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
+	 * @return the JList of Items.
+	 */
 	public JList loadItems()
 	{
 		final JList list = new JList(theProject.getContents().toArray());

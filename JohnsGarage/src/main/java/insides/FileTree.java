@@ -37,7 +37,7 @@ public class FileTree {
 	
 	/**
 	 * Initializes values for the FileTree class.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/6/2019
 	 * @author Sam
 	 * @param file
 	 */

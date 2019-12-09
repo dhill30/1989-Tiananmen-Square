@@ -26,7 +26,8 @@ public class GFile implements Serializable{
 	
 	/**
 	 * Sets basic parameters for the file.
-	 * Last Edited: 12/4/2019
+	 * Turns out Paths aren't serializable, so converts to a string internal representation.
+	 * Last Edited: 12/9/2019
 	 * @author Sam
 	 * @param path
 	 * @param name
@@ -40,7 +41,7 @@ public class GFile implements Serializable{
 	
 	/**
 	 * Gets the Path to the object within the FileSystem.
-	 * Last Edited: 12/4/2019
+	 * Last Edited: 12/9/2019
 	 * @author Sam
 	 * @return the Path
 	 */
