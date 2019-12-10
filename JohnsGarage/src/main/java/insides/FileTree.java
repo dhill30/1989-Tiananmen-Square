@@ -29,22 +29,29 @@ public class FileTree {
 	
 	private Folder<Tab> _root;
 	private static final Path DEFAULTPATH = Paths.get(System.getProperty("user.dir"));
-	private static final Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
-	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
-	private static final Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
+	private static Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
+	private static Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
+	private static Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
 	
 	private Map<String, Map<String, String>> _itemProperties;
 	
 	/**
 	 * Initializes values for the FileTree class.
+	 * A boolean is passed if it is initialized in a test environment.
 	 * Last Edited: 12/6/2019
 	 * @author Sam
-	 * @param file
+	 * @param isTest
 	 */
-	public FileTree()
+	public FileTree(boolean isTest)
 	{
 		try
 		{
+			if(isTest)
+			{
+				ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//testdata");
+				PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
+				CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
+			}
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
 				Files.createDirectory(ROOTPATH);
@@ -314,7 +321,7 @@ public class FileTree {
 	 * @return the new Item.
 	 */
 	// temp change: parent to Project
-	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
+	public Item newItem(String nameplusext, Path itempath, Folder parent)
 	{
 		try
 		{
