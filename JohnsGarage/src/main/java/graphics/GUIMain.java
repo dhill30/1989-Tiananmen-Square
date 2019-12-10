@@ -54,7 +54,7 @@ public class GUIMain
 	 */
 	public static void main(String[] args)
 	{
-		theFileTree = new FileTree();
+		theFileTree = new FileTree(false); //Bool is for if it's a test
 		
 		EventQueue.invokeLater(new Runnable()
 		{
