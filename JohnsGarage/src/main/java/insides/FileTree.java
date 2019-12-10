@@ -29,22 +29,29 @@ public class FileTree {
 	
 	private Folder<Tab> _root;
 	private static final Path DEFAULTPATH = Paths.get(System.getProperty("user.dir"));
-	private static final Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
-	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
-	private static final Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
+	private static Path ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//data");
+	private static Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
+	private static Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
 	
 	private Map<String, Map<String, String>> _itemProperties;
 	
 	/**
 	 * Initializes values for the FileTree class.
+	 * A boolean is passed if it is initialized in a test environment.
 	 * Last Edited: 12/6/2019
 	 * @author Sam
-	 * @param file
+	 * @param isTest
 	 */
-	public FileTree()
+	public FileTree(boolean isTest)
 	{
 		try
 		{
+			if(isTest)
+			{
+				ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//testdata");
+				PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
+				CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
+			}
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
 				Files.createDirectory(ROOTPATH);
@@ -123,6 +130,7 @@ public class FileTree {
 	 */
 	public void delete(GFile file, Folder parent)
     {
+		_itemProperties.remove(file.getPath().toString());
         try
         {
             if(!file.getClass().getSimpleName().equals("Item"))
@@ -228,7 +236,7 @@ public class FileTree {
 	 */
 	public Map<String, String> getProperties(GFile item)
 	{
-		return _itemProperties.get(item.getPath().toString());
+		return _itemProperties.get(item.getPath().relativize(ROOTPATH).toString());
 	}
 	
 	/**
@@ -241,8 +249,8 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
-		if(!_itemProperties.containsKey(target)) _itemProperties.put(target.getPath().toString(), new HashMap<String, String>());
-		_itemProperties.get(target.getPath().toString()).put(property, value);
+		if(!_itemProperties.containsKey(target.getPath().relativize(ROOTPATH).toString())) _itemProperties.put(target.getPath().relativize(ROOTPATH).toString(), new HashMap<String, String>());
+		_itemProperties.get(target.getPath().relativize(ROOTPATH).toString()).put(property, value);
 	}
 	
 	/**
@@ -285,17 +293,7 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
-			
-
-//			// Jim added this bit too keep track of item descriptions
-//			System.out.println(temppath.toString());
-//			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
-//			itemFile.createNewFile();
-//			FileWriter writer = new FileWriter(itemFile);
-//			writer.write("Project Name: " + name + "\r\n"); writer.close(); 
 			return ret;
-			 
-			//pls use getProperties and changeProperty for this -Sam
 		}
 		catch (IOException e)
 		{
@@ -314,7 +312,7 @@ public class FileTree {
 	 * @return the new Item.
 	 */
 	// temp change: parent to Project
-	public Item newItem(String nameplusext, Path itempath, Folder parent) //I'm unsure as to how this is going to be called, 
+	public Item newItem(String nameplusext, Path itempath, Folder parent)
 	{
 		try
 		{
