@@ -21,6 +21,7 @@ public class GUIAbout extends JDialog
 
 	/**
 	 * Create the dialog.
+	 * Last Edited: 12/6/2019
 	 * @author James, Mike
 	 */
 	public GUIAbout()

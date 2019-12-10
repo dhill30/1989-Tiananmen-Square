@@ -206,7 +206,9 @@ public class GUIMain
 	}
 
 	/**
-	 * TODO
+	 * Builds the export button below the main window pane, and the actions associated with it.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
 	 */
 	private void createExport()
 	{
@@ -241,13 +243,15 @@ public class GUIMain
 	}
 	
 	/**
-	 * TODO
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
