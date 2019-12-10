@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -162,30 +163,35 @@ public class GUIAddItem extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String extension = "";
-				int i = location.toString().lastIndexOf('.');
-				if (i > 0) extension = location.toString().substring(i);
-				String newName = nameText.getText() + extension;
-				Item temp = theFileTree.newItem(newName, location, theProject);
-				
-				
-				//Jim added this bit to keep track of item descriptions 
-//				File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
-//				System.out.println(itemFile.getPath().toString());
-//				FileWriter writer; try {
-//					writer = new FileWriter(itemFile, true); writer.write("\r\nItem Name: " +
-//							nameText.getText() + "\r\nItem Description: " + descText.getText());
-//					writer.close();
-//					} catch (IOException e1) { 
-//						e1.printStackTrace(); 
-//					}
-				 
-				
-				//example of properties
-				theFileTree.changeProperty(temp, "desc", descText.getText());
-				
-				theViewer.refresh();
-				GUIAddItem.this.dispose();
+				if (nameText.getText().equals("")) JOptionPane.showMessageDialog(GUIAddItem.this, "You must enter a name", "Error", JOptionPane.ERROR_MESSAGE);
+				else if (location == null) JOptionPane.showMessageDialog(GUIAddItem.this, "You must choose a file", "Error", JOptionPane.ERROR_MESSAGE);
+				else
+				{
+					String extension = "";
+					int i = location.toString().lastIndexOf('.');
+					if (i > 0) extension = location.toString().substring(i);
+					String newName = nameText.getText() + extension;
+					Item temp = theFileTree.newItem(newName, location, theProject);
+					
+					
+					//Jim added this bit to keep track of item descriptions 
+//					File itemFile = new File(theProject.getPath() + "//" + theProject.getName() + "-itemdata.txt");
+//					System.out.println(itemFile.getPath().toString());
+//					FileWriter writer; try {
+//						writer = new FileWriter(itemFile, true); writer.write("\r\nItem Name: " +
+//								nameText.getText() + "\r\nItem Description: " + descText.getText());
+//						writer.close();
+//						} catch (IOException e1) { 
+//							e1.printStackTrace(); 
+//						}
+					
+					
+					//example of properties
+					theFileTree.changeProperty(temp, "desc", descText.getText());
+					
+					theViewer.refresh();
+					GUIAddItem.this.dispose();
+				}
 			}
 		});
 	}

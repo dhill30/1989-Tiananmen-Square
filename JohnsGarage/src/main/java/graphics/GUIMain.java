@@ -187,7 +187,6 @@ public class GUIMain
 			{
 				Tab selected = tabs.getSelected();
 				if (selected == null) JOptionPane.showMessageDialog(mainFrame, "You must select a Tab", "Error", JOptionPane.ERROR_MESSAGE);
-				else if (selected.getName().equals("Projects")) JOptionPane.showMessageDialog(mainFrame, "You are not allowed to remove \"Projects\"", "Error", JOptionPane.ERROR_MESSAGE);
 				else
 				{
 					int confirm = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to remove \"" + selected + "\"?", "Remove Tab", JOptionPane.YES_NO_OPTION);
@@ -195,7 +194,7 @@ public class GUIMain
 					{
 						theFileTree.delete(selected, theFileTree.getRoot());
 						projectManager.removePane(selected);
-						if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
+						if (theFileTree.getTabs().size() == 0) removeTab.setEnabled(false);
 						System.out.println("Tab removed...");
 					}
 				}
@@ -203,7 +202,7 @@ public class GUIMain
 			}
 		});
 		
-		if (theFileTree.getTabs().size() <= 1) removeTab.setEnabled(false);
+		if (theFileTree.getTabs().size() == 0) removeTab.setEnabled(false);
 	}
 
 	/**
