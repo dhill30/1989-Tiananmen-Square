@@ -130,6 +130,7 @@ public class FileTree {
 	 */
 	public void delete(GFile file, Folder parent)
     {
+		_itemProperties.remove(file.getPath().toString());
         try
         {
             if(!file.getClass().getSimpleName().equals("Item"))
@@ -235,7 +236,7 @@ public class FileTree {
 	 */
 	public Map<String, String> getProperties(GFile item)
 	{
-		return _itemProperties.get(item.getPath().toString());
+		return _itemProperties.get(item.getPath().relativize(ROOTPATH).toString());
 	}
 	
 	/**
@@ -248,8 +249,8 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
-		if(!_itemProperties.containsKey(target.getPath().toString())) _itemProperties.put(target.getPath().toString(), new HashMap<String, String>());
-		_itemProperties.get(target.getPath().toString()).put(property, value);
+		if(!_itemProperties.containsKey(target.getPath().relativize(ROOTPATH).toString())) _itemProperties.put(target.getPath().relativize(ROOTPATH).toString(), new HashMap<String, String>());
+		_itemProperties.get(target.getPath().relativize(ROOTPATH).toString()).put(property, value);
 	}
 	
 	/**
@@ -292,17 +293,7 @@ public class FileTree {
 			Files.createDirectory(temppath);
 			Project ret = new Project(temppath, name);
 			parent.add(ret);
-			
-
-//			// Jim added this bit too keep track of item descriptions
-//			System.out.println(temppath.toString());
-//			File itemFile = new File(temppath.toString() + "//" + name + "-itemdata.txt");
-//			itemFile.createNewFile();
-//			FileWriter writer = new FileWriter(itemFile);
-//			writer.write("Project Name: " + name + "\r\n"); writer.close(); 
 			return ret;
-			 
-			//pls use getProperties and changeProperty for this -Sam
 		}
 		catch (IOException e)
 		{
