@@ -35,6 +35,8 @@ public class GUIProjectPane extends JPanel
 	
 	private JScrollPane scrollPane;
 	
+	private JButton removeProject;
+	
 	private GridBagConstraints constraints;
 	
 	/**
@@ -72,7 +74,7 @@ public class GUIProjectPane extends JPanel
 	 */
 	private void createAddRemove()
 	{
-		final JButton removeProject = new JButton("Remove Project");
+		removeProject = new JButton("Remove Project");
 		setConstraints(1,0,1,1,0.1,0.05);
 		removeProject.addActionListener(new ActionListener()
 		{
@@ -101,14 +103,16 @@ public class GUIProjectPane extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String name = JOptionPane.showInputDialog("Enter Project name:", null);
-				if (name != null && !name.equals(""))
-				{
-					theFileTree.newProject(name, theTab);
-					removeProject.setEnabled(true);
-					System.out.println("Project added...");
-				}
-				refresh();
+//				String name = JOptionPane.showInputDialog("Enter Project name:", null);
+//				if (name != null && !name.equals(""))
+//				{
+//					theFileTree.newProject(name, theTab);
+//					removeProject.setEnabled(true);
+//					System.out.println("Project added...");
+//				}
+//				refresh();
+				
+				new GUIAddProject(theFileTree, theTab, GUIProjectPane.this);
 			}
 		});
 		add(addProject, constraints);
@@ -164,7 +168,12 @@ public class GUIProjectPane extends JPanel
 		return (Project) projectList.getSelectedValue();
 	}
 	
-	private void refresh()
+	public JButton getRemoveButton()
+	{
+		return removeProject;
+	}
+	
+	public void refresh()
 	{
 		projectList = loadProjects();
 		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

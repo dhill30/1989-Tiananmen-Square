@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import insides.FileTree;
 import insides.Item;
@@ -65,11 +67,12 @@ public class GUIProjectView extends JFrame
 		setVisible(true);
 		
 		JLabel title = new JLabel(theProject.getName());
-		title.setFont(new Font("Tahoma", Font.BOLD, 32));
+		title.setFont(new Font("Tahoma", Font.BOLD, 28));
 		setConstraints(0,0,1,1,0.8,0.05);
 		add(title, constraints);
 		
 		createAddRemove();
+		createDesc();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -78,7 +81,7 @@ public class GUIProjectView extends JFrame
 		itemList = loadItems();
 		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(itemList);
-		setConstraints(0,1,3,1,1,0.95);
+		setConstraints(0,2,3,1,1,0.85);
 		add(scrollPane, constraints);
 	}
 	
@@ -115,6 +118,25 @@ public class GUIProjectView extends JFrame
 		add(addItem, constraints);
 		
 		if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
+	}
+	
+	private void createDesc()
+	{
+		JTextArea desc = new JTextArea(getDesc(theProject));
+		desc.setEditable(false);
+		desc.setFont(new Font("Tahoma", Font.BOLD, 16));
+		setConstraints(0,1,3,1,1,0.15);
+		add(desc, constraints);
+	}
+	
+	private String getDesc(Project project)
+	{
+		String projectDesc;
+		Map<String, String> projectProps = theFileTree.getProperties(project);
+		if(projectProps == null) return "No Description.";
+		else projectDesc = projectProps.get("desc");
+		if(projectDesc == null) return "No Description.";
+		else return projectDesc;
 	}
 	
 	/**

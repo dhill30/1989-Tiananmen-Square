@@ -55,6 +55,7 @@ private static final long serialVersionUID = 426473126064216924L;
 	 */
 	public GUIItemView(final Item theItem, FileTree tree) {
 		theFileTree = tree;
+		constraints = new GridBagConstraints();
 		itemName = theItem.getName();
 		int i = itemName.toString().lastIndexOf('.');
 		String extension = "";
@@ -65,7 +66,6 @@ private static final long serialVersionUID = 426473126064216924L;
 		setBounds(200, 200, 600, 400);
 		setMinimumSize(new Dimension(600, 400));
 		getContentPane().setLayout(new GridBagLayout());
-		constraints = new GridBagConstraints();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);	
 		
@@ -76,7 +76,7 @@ private static final long serialVersionUID = 426473126064216924L;
 
 		JTextArea desc = new JTextArea(getDesc(theItem));
 		desc.setEditable(false);
-		desc.setFont(new Font("Tahoma", Font.BOLD, 24));
+		desc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		setConstraints(0,1,2,1,.3,0.95);
 		add(desc, constraints);
 		
