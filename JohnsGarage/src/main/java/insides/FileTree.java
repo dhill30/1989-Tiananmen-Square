@@ -33,7 +33,7 @@ public class FileTree {
 	private static final Path PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 	private static final Path CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
 	
-	private Map<GFile, Map<String, String>> _itemProperties;
+	private Map<String, Map<String, String>> _itemProperties;
 	
 	/**
 	 * Initializes values for the FileTree class.
@@ -53,7 +53,7 @@ public class FileTree {
 			if(!Files.exists(CONFIGPATH))
 				{
 					Files.createFile(CONFIGPATH);
-					_itemProperties = new HashMap<GFile, Map<String, String>>();
+					_itemProperties = new HashMap<String, Map<String, String>>();
 				}
 			else if(CONFIGPATH.toFile().length() != 0L)
 			{
@@ -61,7 +61,7 @@ public class FileTree {
 				FileInputStream f = new FileInputStream(config);
 				BufferedInputStream b = new BufferedInputStream(f);
 				ObjectInputStream reader = new ObjectInputStream(b);
-				_itemProperties = (Map<GFile, Map<String, String>>) reader.readObject();
+				_itemProperties = (Map<String, Map<String, String>>) reader.readObject();
 				reader.close();
 			}
 			build();
@@ -228,7 +228,7 @@ public class FileTree {
 	 */
 	public Map<String, String> getProperties(GFile item)
 	{
-		return _itemProperties.get(item);
+		return _itemProperties.get(item.getPath().toString());
 	}
 	
 	/**
@@ -241,8 +241,8 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
-		if(!_itemProperties.containsKey(target)) _itemProperties.put(target, new HashMap<String, String>());
-		_itemProperties.get(target).put(property, value);
+		if(!_itemProperties.containsKey(target)) _itemProperties.put(target.getPath().toString(), new HashMap<String, String>());
+		_itemProperties.get(target.getPath().toString()).put(property, value);
 	}
 	
 	/**
