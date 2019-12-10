@@ -1,5 +1,7 @@
 /**
- * TODO
+ * GUIItemView is the window which displays stored info for the items
+ * Last Edited 12/9/19
+ * @author James
  */
 package graphics;
 
@@ -128,25 +130,9 @@ private static final long serialVersionUID = 426473126064216924L;
 		else return itemDesc;
 	}
 	
-//	private String getDesc(File itemInfo) {
-//		try {
-//			Scanner scanner = new Scanner(itemInfo);
-//			String tempItemName = "Item Name: " + itemName;
-//			while(scanner.hasNextLine()) {
-//				if(scanner.nextLine().equals(tempItemName)) {
-//					itemDesc = scanner.nextLine();
-//					break;
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		int i = itemDesc.toString().indexOf(':');
-//		return itemDesc.substring(i+1);
-//	}
 
 	/**
-	 * TODO
+	 * Sets the constraints of each GUI element for grid bay layout
 	 * @param x
 	 * @param y
 	 * @param w
