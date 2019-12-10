@@ -1,5 +1,7 @@
 /**
- * TODO
+ * GUIAbout creates the about window in our GUI
+ * Last Edited 12/10/19
+ * @author James, Mike
  */
 package graphics;
 
