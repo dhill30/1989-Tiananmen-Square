@@ -248,7 +248,7 @@ public class FileTree {
 	 */
 	public void changeProperty(GFile target, String property, String value)
 	{
-		if(!_itemProperties.containsKey(target)) _itemProperties.put(target.getPath().toString(), new HashMap<String, String>());
+		if(!_itemProperties.containsKey(target.getPath().toString())) _itemProperties.put(target.getPath().toString(), new HashMap<String, String>());
 		_itemProperties.get(target.getPath().toString()).put(property, value);
 	}
 	
