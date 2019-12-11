@@ -1,7 +1,7 @@
 /**
  * The main GUI window for the project, and also the entry point.
  * Last Edited: 12/4/2019
- * @author Dylan
+ * @author Dylan, James, Mike
  */
 package graphics;
 
@@ -39,7 +39,7 @@ public class GUIMain
 	/**
 	 * Basic constructor.
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author James, Mike
 	 */
 	private GUIMain()
 	{
@@ -49,12 +49,12 @@ public class GUIMain
 	/**
 	 * Starts the program and initializes the FileTree
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author Dylan, James, Mike
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
-		theFileTree = new FileTree(false); //Bool is for if it's a test
+		theFileTree = new FileTree(false); //Bool is used for testing
 		
 		EventQueue.invokeLater(new Runnable()
 		{
@@ -84,7 +84,7 @@ public class GUIMain
 	/**
 	 * Creates the basic UI components for the main UI window.
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author Dylan, James, Mike
 	 */
 	private void initialize()
 	{
@@ -206,7 +206,9 @@ public class GUIMain
 	}
 
 	/**
-	 * Creates the jbutton for export and implements the export functionality
+	 * Builds the export button below the main window pane, and the actions associated with it.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
 	 */
 	private void createExport()
 	{
@@ -241,13 +243,15 @@ public class GUIMain
 	}
 	
 	/**
-	 * Sets the constraints of the GUI components using grid bag layout
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
