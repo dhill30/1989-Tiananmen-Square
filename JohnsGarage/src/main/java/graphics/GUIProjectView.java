@@ -1,10 +1,12 @@
 /**
- * TODO
+ * The window for viewing a Project's associated items and its description.
+ * Also controls the adding/removing of items in the Project.
+ * Last Edited: 12/10/2019
+ * @author Dylan
  */
 package graphics;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,12 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,20 +42,23 @@ public class GUIProjectView extends JFrame
 	
 	private JScrollPane scrollPane;
 	
+	private JButton removeItem;
+	
 	private JList itemList;
 	
 	/**
-	 * TODO
-	 * @param fileTree
-	 * @param project
+	 * Creates the JFrame window for viewing a Project's contents/description
+	 * Last Edited: 12/5/2019
+	 * @author Dylan
+	 * @param fileTree main FileTree for file representation
+	 * @param project associated Project for viewing contents
 	 */
 	public GUIProjectView(FileTree fileTree, Project project)
 	{
 		theFileTree = fileTree;
 		theProject = project;
 		constraints = new GridBagConstraints();
-		//itemInfo = Paths.get(theProject.getPath() + "\\" + theProject.getName() + "-itemdata.txt").toFile();
-		//no - Sam
+		
 		setTitle(theProject.getName());
 		setBounds(100, 100, 800, 600);
 		setMinimumSize(new Dimension(640, 480));
@@ -86,22 +86,28 @@ public class GUIProjectView extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Creates the add/remove item buttons and their associated actions
+	 * Last Edited: 12/10/2019
+	 * @author Dylan
 	 */
 	private void createAddRemove()
 	{
-		final JButton removeItem = new JButton("Remove Item");
+		removeItem = new JButton("Remove Item");
 		setConstraints(1,0,1,1,0.1,0.05);
 		removeItem.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				Item selected = (Item) itemList.getSelectedValue();
-				int confirm = JOptionPane.showConfirmDialog(GUIProjectView.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Item", JOptionPane.YES_NO_OPTION);
-				if (confirm == 0) theFileTree.delete(selected, theProject);
-				if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
+				if (selected == null) JOptionPane.showMessageDialog(GUIProjectView.this, "You must select an item", "Error", JOptionPane.ERROR_MESSAGE);
+				else
+				{
+					int confirm = JOptionPane.showConfirmDialog(GUIProjectView.this, "Are you sure you want to remove \"" + selected + "\"?", "Remove Item", JOptionPane.YES_NO_OPTION);
+					if (confirm == 0) theFileTree.delete(selected, theProject);
+					if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
+					System.out.println("Item removed...");
+				}
 				refresh();
-				System.out.println("Item removed...");
 			}
 		});
 		add(removeItem, constraints);
@@ -120,6 +126,11 @@ public class GUIProjectView extends JFrame
 		if (theProject.getContents().size() == 0) removeItem.setEnabled(false);
 	}
 	
+	/**
+	 * Creates the description area for the Project
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
+	 */
 	private void createDesc()
 	{
 		JTextArea desc = new JTextArea(getDesc(theProject));
@@ -129,6 +140,13 @@ public class GUIProjectView extends JFrame
 		add(desc, constraints);
 	}
 	
+	/**
+	 * gets the Description property of an Project.
+	 * Last Edited: 12/10/2019
+	 * @author Sam, Dylan
+	 * @param project Project to get description of
+	 * @return the Description
+	 */
 	private String getDesc(Project project)
 	{
 		String projectDesc;
@@ -143,7 +161,7 @@ public class GUIProjectView extends JFrame
 	 * Builds the list of Items contained within the project.
 	 * Last Edited: 12/9/2019
 	 * @author Dylan
-	 * @return the JList of Items.
+	 * @return the JList of Items
 	 */
 	public JList loadItems()
 	{
@@ -157,14 +175,6 @@ public class GUIProjectView extends JFrame
 				{
 					Item select = (Item) list.getSelectedValue();
 					new GUIItemView(select, theFileTree);
-//					try
-//					{
-//						Desktop.getDesktop().open(file);
-//					}
-//					catch (IOException e1)
-//					{
-//						e1.printStackTrace();
-//					}
 				}
 			}
 		});
@@ -172,13 +182,38 @@ public class GUIProjectView extends JFrame
 	}
 	
 	/**
-	 * TODO
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Returns the remove button
+	 * Last Edited: 12/10/2019
+	 * @author Dylan
+	 * @return remove Project button
+	 */
+	public JButton getRemoveButton()
+	{
+		return removeItem;
+	}
+	
+	/**
+	 * Refreshes the Project view to display any changes
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
+	public void refresh()
+	{
+		itemList = loadItems();
+		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(itemList);
+	}
+	
+	/**
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
@@ -190,15 +225,5 @@ public class GUIProjectView extends JFrame
 		constraints.weighty = wy;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.fill = GridBagConstraints.BOTH;
-	}
-	
-	/**
-	 * TODO
-	 */
-	public void refresh()
-	{
-		itemList = loadItems();
-		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(itemList);
 	}
 }

@@ -36,8 +36,8 @@ public class GUITabPane extends JPanel
 	 * Creates a JScrollPane of the user's Tabs.
 	 * Last Edited: 12/4/2019
 	 * @author Dylan
-	 * @param fileTree
-	 * @param pm
+	 * @param fileTree main FileTree for file representation
+	 * @param pm GUIProjectPaneManager used for swapping active Tab
 	 */
 	public GUITabPane(FileTree fileTree, GUIProjectPaneManager pm)
 	{

@@ -31,7 +31,7 @@ public class GUIProjectPaneManager extends JPanel
 	 * Creates a JPanel for swapping between Tab views
 	 * Last Edited: 12/4/2019
 	 * @author Dylan
-	 * @param fileTree
+	 * @param fileTree main FileTree for file representation
 	 */
 	public GUIProjectPaneManager(FileTree fileTree)
 	{

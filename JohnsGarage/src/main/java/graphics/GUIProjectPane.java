@@ -1,5 +1,8 @@
 /**
- * TODO
+ * The panel for viewing a Tab's Projects. Instances are controlled by GUIProjectPaneManager.
+ * Also controls adding/removing of Projects in the Tab.
+ * Last Edited: 12/9/2019
+ * @author Dylan
  */
 package graphics;
 
@@ -40,9 +43,11 @@ public class GUIProjectPane extends JPanel
 	private GridBagConstraints constraints;
 	
 	/**
-	 * TODO
-	 * @param fileTree
-	 * @param currentTab
+	 * Creates a JPanel for viewing a Tab's associated Projects
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param fileTree main FileTree for file representation
+	 * @param currentTab associated Tab to view contents of
 	 */
 	public GUIProjectPane(FileTree fileTree, Tab currentTab)
 	{
@@ -70,7 +75,9 @@ public class GUIProjectPane extends JPanel
 	}
 	
 	/**
-	 * TODO
+	 * Creates the add/remove buttons and their associated actions plus null cases
+	 * Last Edited: 12/6/2019
+	 * @author Dylan
 	 */
 	private void createAddRemove()
 	{
@@ -103,15 +110,6 @@ public class GUIProjectPane extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-//				String name = JOptionPane.showInputDialog("Enter Project name:", null);
-//				if (name != null && !name.equals(""))
-//				{
-//					theFileTree.newProject(name, theTab);
-//					removeProject.setEnabled(true);
-//					System.out.println("Project added...");
-//				}
-//				refresh();
-				
 				new GUIAddProject(theFileTree, theTab, GUIProjectPane.this);
 			}
 		});
@@ -121,8 +119,10 @@ public class GUIProjectPane extends JPanel
 	}
 	
 	/**
-	 * TODO
-	 * @return
+	 * Loads a JList of the Tab's Projects
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return JList of the Tab's Projects
 	 */
 	public JList loadProjects()
 	{
@@ -143,13 +143,49 @@ public class GUIProjectPane extends JPanel
 	}
 	
 	/**
-	 * TODO
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Returns the currently selected Project
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @return currently selected Project
+	 */
+	public Project getSelected()
+	{
+		return (Project) projectList.getSelectedValue();
+	}
+	
+	/**
+	 * Returns the remove button
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
+	 * @return remove Project button
+	 */
+	public JButton getRemoveButton()
+	{
+		return removeProject;
+	}
+	
+	/**
+	 * Refreshes the Project pane to display any changes
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 */
+	public void refresh()
+	{
+		projectList = loadProjects();
+		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(projectList);
+	}
+	
+	/**
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
@@ -161,22 +197,5 @@ public class GUIProjectPane extends JPanel
 		constraints.weighty = wy;
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.fill = GridBagConstraints.BOTH;
-	}
-	
-	public Project getSelected()
-	{
-		return (Project) projectList.getSelectedValue();
-	}
-	
-	public JButton getRemoveButton()
-	{
-		return removeProject;
-	}
-	
-	public void refresh()
-	{
-		projectList = loadProjects();
-		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(projectList);
 	}
 }
