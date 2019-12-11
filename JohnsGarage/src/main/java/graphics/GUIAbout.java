@@ -7,12 +7,10 @@ package graphics;
 
 import java.awt.Dimension;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import insides.Version;
 
 public class GUIAbout extends JDialog
@@ -23,6 +21,7 @@ public class GUIAbout extends JDialog
 
 	/**
 	 * Create the dialog.
+	 * Last Edited: 12/6/2019
 	 * @author James, Mike
 	 */
 	public GUIAbout()

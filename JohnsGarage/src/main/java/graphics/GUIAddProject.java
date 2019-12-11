@@ -1,5 +1,5 @@
 /**
- * GUIAddProject is the pop-up window which allows users to add projects and their information to the file tree
+ * GUIAddProject is the pop-up window which allows users to add projects and their descriptions to the file tree
  * Last Edited: 12/9/19
  * @author Dylan
  */
@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,17 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import insides.FileTree;
 import insides.Project;
 import insides.Tab;
 
 public class GUIAddProject extends JFrame
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1106706898326899745L;
 	
 	private FileTree theFileTree;
@@ -45,9 +39,11 @@ public class GUIAddProject extends JFrame
 	
 	/**
 	 * Creates the add project window
-	 * @param root
-	 * @param parent
-	 * @param viewer
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
+	 * @param root main FileTree for file representation
+	 * @param parent associated Tab to add a Project to
+	 * @param viewer main panel for viewing Tab contents
 	 */
 	public GUIAddProject(FileTree root, Tab parent, GUIProjectPane viewer)
 	{
@@ -67,8 +63,11 @@ public class GUIAddProject extends JFrame
 		createDesc();
 		createConfirm();
 	}
-	/*
-	 * Creates the name jlabel
+	
+	/**
+	 * Creates the label and text field for the new Project's name
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
 	 */
 	private void createName()
 	{
@@ -81,8 +80,10 @@ public class GUIAddProject extends JFrame
 		add(nameText, constraints);
 	}
 	
-	/*
-	 * Creates the description area
+	/**
+	 * Creates the label and text area for the new Project's description
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
 	 */
 	private void createDesc()
 	{
@@ -97,8 +98,10 @@ public class GUIAddProject extends JFrame
 		add(descText, constraints);
 	}
 	
-	/*
-	 * Creates the confirm and cancel JButtons and implements adding a project to the file tree
+	/**
+	 * Creates the confirm and cancel buttons and their associated actions
+	 * Last Edited: 12/9/2019
+	 * @author Dylan
 	 */
 	private void createConfirm()
 	{
@@ -137,19 +140,23 @@ public class GUIAddProject extends JFrame
 					theFileTree.changeProperty(temp, "desc", descText.getText());
 					theViewer.getRemoveButton().setEnabled(true);
 					theViewer.refresh();
+					System.out.println("Project added...");
 					GUIAddProject.this.dispose();
 				}
 			}
 		});
 	}
+	
 	/**
-	 * Sets the constraints of the GUI components using grid bag layout
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
