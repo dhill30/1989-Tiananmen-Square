@@ -1,7 +1,10 @@
+graphics\GUIAddProject.class
+graphics\GUIItemView.class
 graphics\GUIMain$3.class
 graphics\GUIProjectPane$2.class
 graphics\GUIAddItem$3.class
-insides\Category.class
+graphics\GUIAddProject$2.class
+graphics\GUIItemView$1.class
 graphics\GUIMain.class
 insides\Tab.class
 insides\FileTree$1.class
@@ -15,6 +18,7 @@ insides\Folder.class
 graphics\GUIAddItem$2.class
 graphics\GUIProjectView$2.class
 insides\Project.class
+graphics\GUIItemView$2.class
 graphics\GUIMain$4.class
 graphics\GUIProjectPaneManager.class
 insides\GFile.class
@@ -24,6 +28,7 @@ graphics\GUIProjectView$1.class
 graphics\GUIMain$2.class
 graphics\GUIProjectView.class
 graphics\GUIProjectPane$1.class
+graphics\GUIAddProject$1.class
 graphics\GUIProjectPane.class
 graphics\GUIAddItem$1.class
 graphics\GUIProjectView$3.class
