@@ -1,7 +1,7 @@
 /**
  * GUIAddItem is the pop-up window which allows users to add items and their information to a project
  * Last Edited: 12/9/19
- * @author 
+ * @author Dylan, James
  */
 package graphics;
 
@@ -28,9 +28,7 @@ import insides.Project;
 
 public class GUIAddItem extends JFrame
 {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -234094099040318584L;
 
 	private FileTree theFileTree;
@@ -50,7 +48,7 @@ public class GUIAddItem extends JFrame
 	private JLabel filePath;
 	
 	/**
-	 * TODO
+	 * Creates the add item window
 	 * @param root
 	 * @param parent
 	 * @param viewer
@@ -76,7 +74,7 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Builds the jlabel for name
 	 */
 	private void createName()
 	{
@@ -90,7 +88,7 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Builds the description area
 	 */
 	private void createDesc()
 	{
@@ -106,7 +104,7 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Builds the file chooser/select file option
 	 */
 	private void createSelect()
 	{
@@ -133,7 +131,7 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Builds the confirm button and adds the item to the file tree
 	 */
 	private void createConfirm()
 	{
@@ -183,7 +181,7 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * TODO
+	 * Sets the constraints of the GUI components using grid bag layout
 	 * @param x
 	 * @param y
 	 * @param w

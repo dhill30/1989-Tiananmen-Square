@@ -1,3 +1,8 @@
+/**
+ * GUIAddProject is the pop-up window which allows users to add projects and their information to the file tree
+ * Last Edited: 12/9/19
+ * @author Dylan
+ */
 package graphics;
 
 import java.awt.GridBagConstraints;
@@ -38,6 +43,12 @@ public class GUIAddProject extends JFrame
 	
 	private JTextArea descText;
 	
+	/**
+	 * Creates the add project window
+	 * @param root
+	 * @param parent
+	 * @param viewer
+	 */
 	public GUIAddProject(FileTree root, Tab parent, GUIProjectPane viewer)
 	{
 		theFileTree = root;
@@ -56,7 +67,9 @@ public class GUIAddProject extends JFrame
 		createDesc();
 		createConfirm();
 	}
-	
+	/*
+	 * Creates the name jlabel
+	 */
 	private void createName()
 	{
 		JLabel name = new JLabel("Name:");
@@ -68,6 +81,9 @@ public class GUIAddProject extends JFrame
 		add(nameText, constraints);
 	}
 	
+	/*
+	 * Creates the description area
+	 */
 	private void createDesc()
 	{
 		JLabel desc = new JLabel("Description:");
@@ -81,6 +97,9 @@ public class GUIAddProject extends JFrame
 		add(descText, constraints);
 	}
 	
+	/*
+	 * Creates the confirm and cancel JButtons and implements adding a project to the file tree
+	 */
 	private void createConfirm()
 	{
 		JPanel emptyspace1 = new JPanel();
@@ -123,7 +142,15 @@ public class GUIAddProject extends JFrame
 			}
 		});
 	}
-	
+	/**
+	 * Sets the constraints of the GUI components using grid bag layout
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param wx
+	 * @param wy
+	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
 		constraints.gridx = x;

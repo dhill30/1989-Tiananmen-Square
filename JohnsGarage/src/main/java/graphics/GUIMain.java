@@ -206,7 +206,7 @@ public class GUIMain
 	}
 
 	/**
-	 * TODO
+	 * Creates the jbutton for export and implements the export functionality
 	 */
 	private void createExport()
 	{
@@ -241,7 +241,7 @@ public class GUIMain
 	}
 	
 	/**
-	 * TODO
+	 * Sets the constraints of the GUI components using grid bag layout
 	 * @param x
 	 * @param y
 	 * @param w
