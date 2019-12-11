@@ -1,5 +1,5 @@
 /**
- * TODO
+ * Version is responsible for getting the version number
  */
 package insides;
 
