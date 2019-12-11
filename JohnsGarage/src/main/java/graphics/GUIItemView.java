@@ -13,24 +13,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Map;
-import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
 import insides.FileTree;
 import insides.Item;
-import insides.Project;
 
 public class GUIItemView extends JFrame {
 
@@ -38,24 +28,19 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 	private FileTree theFileTree;
 	
-	private Item theItem;
-	
 	private GridBagConstraints constraints;
 	
 	private String itemName;
-	
-	private String itemDesc;
-	
-	private Path itemPath;
 	
 	/**
 	 * Builds the GUIItemView, used for seeing descriptions and giving options for dealing with Items.
 	 * Last Edited: 12/9/2019
 	 * @author James
-	 * @param theItem
-	 * @param tree
+	 * @param theItem associated item for viewing
+	 * @param tree main FileTree for file representation
 	 */
 	public GUIItemView(final Item theItem, FileTree tree) {
+		
 		theFileTree = tree;
 		constraints = new GridBagConstraints();
 		itemName = theItem.getName();
@@ -116,13 +101,14 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 	/**
 	 * gets the Description property of an Item.
-	 * Last Edited: 12/9/2019
-	 * @author Sam
-	 * @param item
+	 * Last Edited: 12/10/2019
+	 * @author Sam, Dylan
+	 * @param item Item to get description of
 	 * @return the Description
 	 */
 	private String getDesc(Item item)
 	{
+		String itemDesc;
 		Map<String, String> itemProps = theFileTree.getProperties(item);
 		if(itemProps == null) return "No Description.";
 		else itemDesc = itemProps.get("desc");
@@ -132,13 +118,15 @@ private static final long serialVersionUID = 426473126064216924L;
 	
 
 	/**
-	 * Sets the constraints of each GUI element for grid bay layout
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{

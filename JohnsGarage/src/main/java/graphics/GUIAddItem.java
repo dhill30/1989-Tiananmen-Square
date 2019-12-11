@@ -1,6 +1,6 @@
 /**
  * GUIAddItem is the pop-up window which allows users to add items and their information to a project
- * Last Edited: 12/9/19
+ * Last Edited: 12/9/2019
  * @author Dylan, James
  */
 package graphics;
@@ -10,9 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Path;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -49,9 +46,10 @@ public class GUIAddItem extends JFrame
 	
 	/**
 	 * Creates the add item window
-	 * @param root
-	 * @param parent
-	 * @param viewer
+	 * @author Dylan, James
+	 * @param root main FileTree for file representation
+	 * @param parent associated Project to add an Item to
+	 * @param viewer main window for viewing Project contents
 	 */
 	public GUIAddItem(FileTree root, Project parent, GUIProjectView viewer)
 	{
@@ -74,7 +72,9 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * Builds the jlabel for name
+	 * Creates the label and text field for the new Item's name
+	 * Last Edited: 12/5/2019
+	 * @author Dylan, James
 	 */
 	private void createName()
 	{
@@ -88,7 +88,9 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * Builds the description area
+	 * Creates the label and text area for the new Item's description
+	 * Last Edited: 12/5/2019
+	 * @author Dylan, James
 	 */
 	private void createDesc()
 	{
@@ -104,7 +106,9 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * Builds the file chooser/select file option
+	 * Creates the file select button and associated actions
+	 * Last Edited: 12/5/2019
+	 * @author Dylan, James
 	 */
 	private void createSelect()
 	{
@@ -131,7 +135,9 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * Builds the confirm button and adds the item to the file tree
+	 * Creates the confirm and cancel buttons and their associated actions
+	 * Last Edited: 12/5/2019
+	 * @author Dylan, James
 	 */
 	private void createConfirm()
 	{
@@ -173,7 +179,9 @@ public class GUIAddItem extends JFrame
 					String newName = nameText.getText() + extension;
 					Item temp = theFileTree.newItem(newName, location, theProject);
 					theFileTree.changeProperty(temp, "desc", descText.getText());
+					theViewer.getRemoveButton().setEnabled(true);
 					theViewer.refresh();
+					System.out.println("Item added...");
 					GUIAddItem.this.dispose();
 				}
 			}
@@ -181,13 +189,15 @@ public class GUIAddItem extends JFrame
 	}
 	
 	/**
-	 * Sets the constraints of the GUI components using grid bag layout
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param wx
-	 * @param wy
+	 * Sets GridBag constraints. To be used before adding a component.
+	 * Last Edited: 12/4/2019
+	 * @author Dylan
+	 * @param x horizontal grid location
+	 * @param y vertical grid locations
+	 * @param w width of component
+	 * @param h height of component
+	 * @param wx horizontal weight
+	 * @param wy vertical weight
 	 */
 	private void setConstraints(int x, int y, int w, int h, double wx, double wy)
 	{
