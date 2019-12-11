@@ -51,6 +51,7 @@ public class FileTree {
 				ROOTPATH = Paths.get(DEFAULTPATH.toString(), "//testdata");
 				PROJECTSPATH = Paths.get(ROOTPATH.toString(), "//Projects");
 				CONFIGPATH = Paths.get(ROOTPATH.toString(), "//config.info");
+				_itemProperties = new HashMap<String, Map<String, String>>();
 			}
 			if(!Files.exists(ROOTPATH)) //Fresh install
 			{
@@ -115,10 +116,6 @@ public class FileTree {
 		_root = new Folder<Tab>(ROOTPATH, "root");
 		buildHelper(ROOTPATH, _root ,  0);
 	}
-	/*
-	 * Jim added the "\\" for all the paths so it would work
-	 * Very nice thank you -Sam
-	 */
 
 	/**
 	 * Takes a GFile and recursively deletes both its children and itself.
@@ -161,7 +158,7 @@ public class FileTree {
 	 * @param nameplusext
 	 * @param parent
 	 */
-	// temp change: parent to Project
+
 	public void importItem(Path path, String nameplusext, Project parent)
 	{
 		try
@@ -311,7 +308,6 @@ public class FileTree {
 	 * @param parent
 	 * @return the new Item.
 	 */
-	// temp change: parent to Project
 	public Item newItem(String nameplusext, Path itempath, Folder parent)
 	{
 		try

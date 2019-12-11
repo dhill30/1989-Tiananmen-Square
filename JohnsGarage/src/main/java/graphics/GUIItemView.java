@@ -56,6 +56,7 @@ private static final long serialVersionUID = 426473126064216924L;
 	 * @param tree
 	 */
 	public GUIItemView(final Item theItem, FileTree tree) {
+		
 		theFileTree = tree;
 		constraints = new GridBagConstraints();
 		itemName = theItem.getName();
