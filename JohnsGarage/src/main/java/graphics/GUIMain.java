@@ -1,7 +1,7 @@
 /**
  * The main GUI window for the project, and also the entry point.
  * Last Edited: 12/4/2019
- * @author Dylan
+ * @author Dylan, James, Mike
  */
 package graphics;
 
@@ -39,7 +39,7 @@ public class GUIMain
 	/**
 	 * Basic constructor.
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author James, Mike
 	 */
 	private GUIMain()
 	{
@@ -49,12 +49,12 @@ public class GUIMain
 	/**
 	 * Starts the program and initializes the FileTree
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author Dylan, James, Mike
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
-		theFileTree = new FileTree(false); //Bool is for if it's a test
+		theFileTree = new FileTree(false); //Bool is used for testing
 		
 		EventQueue.invokeLater(new Runnable()
 		{
@@ -84,7 +84,7 @@ public class GUIMain
 	/**
 	 * Creates the basic UI components for the main UI window.
 	 * Last Edited: 12/4/2019
-	 * @author Dylan
+	 * @author Dylan, James, Mike
 	 */
 	private void initialize()
 	{
